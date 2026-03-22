@@ -6,6 +6,12 @@
     --text-secondary: #444444;
     --color-accent: #701aa1;
 
+    --card-background: #9d9b9b;
+    --card-placeholder: #ebeaea;
+    --searchbar-background: #bbb;
+    --searchbar-accent: #333;
+    --divider-color: #161616;
+
     /* Typography */
     --font-body: system-ui, sans-serif;
     --font-heading: system-ui, sans-serif;
@@ -20,6 +26,10 @@
     --space-sm: 0.5rem;
     --space-md: 1rem;
     --space-lg: 2rem;
+
+    --card-padding: 20px;
+    --card-radius: 12px;
+    --gap-lg: 30px;
 
     /* Border Radius */
     --radius-sm: 4px;
