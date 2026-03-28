@@ -19,12 +19,14 @@
 	//Filters
 	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
 	let selectedArtist: number | null = null; // type of artist id or null
-	let sortOrder: string | null = null; //sorting prices
+	let sortOrder: string = ''; //sorting prices
+	let search: string = ''; //search bar logic
 
 	//Reactive statement to filter and sort products based on selected filters above
 	$: filteredProducts = products
 		.filter((p) => !selectedCategory || p.category === selectedCategory) //filter by category
 		.filter((p) => !selectedArtist || p.artist === selectedArtist) //filter by artist
+		.filter((p) => !search || p.name.toLowerCase().includes(search.toLowerCase())) //filter by search 
 		//sort by price display
 		.sort((a, b) => {
 			if (!sortOrder) return 0; //no option selected
@@ -34,6 +36,13 @@
 
 <div class="container">
 	<div class="search-bar">
+		<input
+			type="text"
+			placeholder="Search products..."
+			bind:value={search}
+			class="search-input"
+		/>
+
 		<!--Dropdown foe categories -->
 		<select bind:value={selectedCategory} class="category-select">
 			<option value={null}>All Categories</option>
@@ -57,29 +66,34 @@
 				}}
 				class:selected={selectedArtist === artist.id}
 			>
-				{artist.name}
+				<div class="image-box"></div>
+				<div class="artist-name">
+					{artist.name}
+				</div>
 			</div>
 		{/each}
 	</div>
 
 	<div class="divider"></div>
 
-	<div class="section-header">
-		<div class="section-title">
-			{#if selectedArtist}
-				<!-- display selected artist name or 'All' if not selected -->
-				Art by {artistImages.find((a) => a.id === selectedArtist)?.name}
-			{:else}
-				Art by All
-			{/if}
-		</div>
+	<div class="header-box">
+		<div class="section-header">
+			<div class="section-title">
+				{#if selectedArtist}
+					<!-- display selected artist name or 'All' if not selected -->
+					Art by {artistImages.find((a) => a.id === selectedArtist)?.name}
+				{:else}
+					Art by All
+				{/if}
+			</div>
 
-		<!-- Dropdown for sorting options -->
-		<select bind:value={sortOrder} class="sort-select">
-			<option value="">Sort By</option>
-			<option value="lowToHigh">Price: Low → High</option>
-			<option value="highToLow">Price: High → Low</option>
-		</select>
+			<!-- Dropdown for sorting options -->
+			<select bind:value={sortOrder} class="sort-select">
+				<option value="">Sort By</option>
+				<option value="lowToHigh">Price: Low → High</option>
+				<option value="highToLow">Price: High → Low</option>
+			</select>
+		</div>
 	</div>
 
 	<div class="gallery-grid">
@@ -99,11 +113,28 @@
 		width: 100%;
 		max-width: 600px;
 		height: 30px;
-		background: var(--searchbar-background);
 		margin: 0 auto 40px auto;
 		display: flex;
-		justify-content: space-between;
+		background: var(--searchbar-background);
 		align-items: center;
+		border-radius: 10px;
+		padding: 5px;
+		gap: 10px;
+	}
+
+	.search-input {
+		flex: 1;
+		padding: 8px;
+		border: none;
+		outline: none;
+		background: transparent;
+		font-size: 14px;
+	}
+
+	.category-select {
+		padding: 4px 8px;
+		border-radius: 6px;
+		border: none;
 	}
 
 	.artists-row {
@@ -115,11 +146,19 @@
 	}
 
 	.artist-card {
-		padding: 20px;
+		padding: 10px;
 		background: var(--card-background);
 		text-align: center;
 		cursor: pointer;
 		border-radius: 10px;
+	}
+
+	.artist-card .image-box {
+		width: 100%;
+		height: 260px;
+		background: var(--card-placeholder);
+		border-radius: 10px;
+		margin-bottom: 10px;
 	}
 
 	/*highlight selected artist*/
@@ -134,11 +173,19 @@
 		margin: 40px 0;
 	}
 
+	.header-box {
+		width: 100%;
+		max-width: 700px;
+		margin: 0 auto 20px auto;
+		background: var(--searchbar-background);
+		padding: 6px 12px;
+		border-radius: 10px;
+	}
+
 	.section-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 20px;
 	}
 
 	.section-title {
