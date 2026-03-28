@@ -1,21 +1,95 @@
-<script>
+<script lang="ts">
 	//keeping content looped.
-	let artistImages = [1, 2, 3, 4];
-	let products = [1, 2, 3, 4, 5, 6];
+	let artistImages = [
+		{ id: 1, name: 'Izzy' },
+		{ id: 2, name: 'Amanda' },
+		{ id: 3, name: 'Cillian' },
+		{ id: 4, name: 'Martin' }
+	];
+
+	let products = [
+		{ id: 1, name: 'Izzys1', price: 25, category: 'Print', artist: 1 },
+		{ id: 2, name: 'Amanda1', price: 5, category: 'Sticker', artist: 2 },
+		{ id: 3, name: 'Izzys2', price: 30, category: 'Print', artist: 1 },
+		{ id: 4, name: 'Cillian1', price: 3, category: 'Sticker', artist: 3 },
+		{ id: 5, name: 'Martin1', price: 40, category: 'Print', artist: 4 },
+		{ id: 6, name: 'Izzys3', price: 6, category: 'Sticker', artist: 1 }
+	];
+
+	//Filters
+	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
+	let selectedArtist: number | null = null; // type of artist id or null
+	let sortOrder: string | null = null; //sorting prices
+
+	//Reactive statement to filter and sort products based on selected filters above
+	$: filteredProducts = products
+		.filter((p) => !selectedCategory || p.category === selectedCategory) //filter by category
+		.filter((p) => !selectedArtist || p.artist === selectedArtist) //filter by artist
+		//sort by price display
+		.sort((a, b) => {
+			if (!sortOrder) return 0; //no option selected
+			return sortOrder === 'lowToHigh' ? a.price - b.price : b.price - a.price;
+		});
 </script>
 
 <div class="container">
-	<div class="search-bar"></div>
+	<div class="search-bar">
+		<!--Dropdown foe categories -->
+		<select bind:value={selectedCategory} class="category-select">
+			<option value={null}>All Categories</option>
+			<option value="Sticker">Sticker</option>
+			<option value="Print">Print</option>
+		</select>
+	</div>
+
 	<div class="artists-row">
-		{#each artistImages as item}
-			<div class="card" style="width: 85%;"></div>
+		{#each artistImages as artist}
+			<div
+				class="card artist-card"
+				role="button"
+				tabindex="0"
+				on:click={() => (selectedArtist = selectedArtist === artist.id ? null : artist.id)}
+				on:keydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						selectedArtist = selectedArtist === artist.id ? null : artist.id;
+						e.preventDefault();
+					}
+				}}
+				class:selected={selectedArtist === artist.id}
+			>
+				{artist.name}
+			</div>
 		{/each}
 	</div>
+
 	<div class="divider"></div>
 
+	<div class="section-header">
+		<div class="section-title">
+			{#if selectedArtist}
+				<!-- display selected artist name or 'All' if not selected -->
+				Art by {artistImages.find((a) => a.id === selectedArtist)?.name}
+			{:else}
+				Art by All
+			{/if}
+		</div>
+
+		<!-- Dropdown for sorting options -->
+		<select bind:value={sortOrder} class="sort-select">
+			<option value="">Sort By</option>
+			<option value="lowToHigh">Price: Low → High</option>
+			<option value="highToLow">Price: High → Low</option>
+		</select>
+	</div>
+
 	<div class="gallery-grid">
-		{#each products as item}
-			<div class="card"></div>
+		{#each filteredProducts as item}
+			<div class="card">
+				<div class="image-box"></div>
+				<!-- placeholder for product image -->
+				<div class="name">{item.name} - ${item.price}</div>
+				<!-- name and price -->
+			</div>
 		{/each}
 	</div>
 </div>
@@ -27,17 +101,9 @@
 		height: 30px;
 		background: var(--searchbar-background);
 		margin: 0 auto 40px auto;
-		position: relative;
-	}
-
-	.search-bar::after {
-		/*Where user will be able to categorise */
-		content: '';
-		position: absolute;
-		right: 0;
-		width: 25%;
-		height: 100%;
-		background: var(--searchbar-accent);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.artists-row {
@@ -48,10 +114,37 @@
 		justify-items: center;
 	}
 
+	.artist-card {
+		padding: 20px;
+		background: var(--card-background);
+		text-align: center;
+		cursor: pointer;
+		border-radius: 10px;
+	}
+
+	/*highlight selected artist*/
+	.artist-card.selected {
+		background: var(--divider-color);
+		color: white;
+	}
+
 	.divider {
 		height: 20px;
 		background: var(--divider-color);
 		margin: 40px 0;
+	}
+
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	.section-title {
+		background: var(--searchbar-background);
+		padding: 5px 10px;
+		font-size: 14px;
 	}
 
 	/*Products display along the bottom*/
@@ -71,18 +164,63 @@
 		aspect-ratio: 3 / 4;
 		display: flex;
 		align-items: center;
+		flex-direction: column;
 		justify-content: center;
 	}
 
+	.image-box {
+		width: 100%;
+		height: 260px;
+		background: var(--card-placeholder);
+		border-radius: 10px;
+		margin-bottom: 10px;
+	}
+
+	.name {
+		font-weight: bold;
+		margin-top: 8px;
+		text-align: center;
+	}
+
+	.sort-select {
+		padding: 5px 10px;
+		font-size: 14px;
+	}
+
 	@media (max-width: 770px) {
-	.artists-row {
-		grid-template-columns: repeat(2, 1fr);
+		.artists-row {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.gallery-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.container {
+			text-align: center;
+		}
 	}
-	.gallery-grid {
-		grid-template-columns: repeat(2, 1fr);
+
+	@media (max-width: 500px) {
+		.gallery-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.section-header {
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.search-bar {
+			height: auto;
+			padding: 10px;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.artists-row {
+			grid-template-columns: 1fr;
+		}
+		.card {
+			max-width: 100%;
+		}
 	}
-	.container {
-		text-align: center; 
-	}
-}
 </style>

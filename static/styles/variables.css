@@ -13,7 +13,7 @@
     --divider-color: #161616;
 
     /* Typography */
-    --font-body: system-ui, sans-serif;
+    --font-body: system-ui, sans-serif; 
     --font-heading: system-ui, sans-serif;
     --font-code: monospace;
 
