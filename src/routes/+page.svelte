@@ -26,7 +26,7 @@
 	$: filteredProducts = products
 		.filter((p) => !selectedCategory || p.category === selectedCategory) //filter by category
 		.filter((p) => !selectedArtist || p.artist === selectedArtist) //filter by artist
-		.filter((p) => !search || p.name.toLowerCase().includes(search.toLowerCase())) //filter by search 
+		.filter((p) => !search || p.name.toLowerCase().includes(search.toLowerCase())) //filter by search
 		//sort by price display
 		.sort((a, b) => {
 			if (!sortOrder) return 0; //no option selected
@@ -35,20 +35,22 @@
 </script>
 
 <div class="container">
-	<div class="search-bar">
-		<input
-			type="text"
-			placeholder="Search products..."
-			bind:value={search}
-			class="search-input"
-		/>
+	<div class="search-container">
+		<div class="search-bar">
+			<input
+				type="text"
+				placeholder="Search products..."
+				bind:value={search}
+				class="search-input"
+			/>
 
-		<!--Dropdown foe categories -->
-		<select bind:value={selectedCategory} class="category-select">
-			<option value={null}>All Categories</option>
-			<option value="Sticker">Sticker</option>
-			<option value="Print">Print</option>
-		</select>
+			<!--Dropdown foe categories -->
+			<select bind:value={selectedCategory} class="category-select">
+				<option value={null}>All Categories</option>
+				<option value="Sticker">Sticker</option>
+				<option value="Print">Print</option>
+			</select>
+		</div>
 	</div>
 
 	<div class="artists-row">
@@ -109,16 +111,28 @@
 </div>
 
 <style>
+	.search-container {
+		position: sticky;
+		top: 0px;
+		z-index: 100;
+		background: var(--background-color, white);
+		padding: 10px 0;
+		height: 70px;
+		align-items: center;
+	}
+
 	.search-bar {
+		position: sticky; /* keeps it visible while scrolling */
+		top: 40px;
+		z-index: 100;
 		width: 100%;
 		max-width: 600px;
 		height: 30px;
-		margin: 0 auto 40px auto;
+		margin: 0 auto;
 		display: flex;
 		background: var(--searchbar-background);
 		align-items: center;
-		border-radius: 10px;
-		padding: 5px;
+		padding: 10px;
 		gap: 10px;
 	}
 
@@ -133,7 +147,6 @@
 
 	.category-select {
 		padding: 4px 8px;
-		border-radius: 6px;
 		border: none;
 	}
 
@@ -179,7 +192,6 @@
 		margin: 0 auto 20px auto;
 		background: var(--searchbar-background);
 		padding: 6px 12px;
-		border-radius: 10px;
 	}
 
 	.section-header {
@@ -203,6 +215,7 @@
 	}
 
 	.card {
+		position: relative;
 		background: var(--card-background);
 		padding: var(--card-padding);
 		border-radius: var(--card-radius);
@@ -213,6 +226,14 @@
 		align-items: center;
 		flex-direction: column;
 		justify-content: center;
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.card:hover {
+		transform: scale(1.03); /* Slightly enlarge */
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Optional: slightly stronger shadow */
 	}
 
 	.image-box {
