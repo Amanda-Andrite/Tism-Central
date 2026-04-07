@@ -12,6 +12,9 @@
     --searchbar-accent: #333;
     --divider-color: #161616;
 
+    --overlay-background-transparent: rgba(0, 0, 0, 0.5);
+    --transparent-overlay:rgba(0, 0, 0, 0.2);
+
     /* Typography */
     --font-body: system-ui, sans-serif; 
     --font-heading: system-ui, sans-serif;

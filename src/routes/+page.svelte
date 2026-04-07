@@ -1,293 +1,105 @@
-<script lang="ts">
-	//keeping content looped.
-	let artistImages = [
-		{ id: 1, name: 'Izzy' },
-		{ id: 2, name: 'Amanda' },
-		{ id: 3, name: 'Cillian' },
-		{ id: 4, name: 'Martin' }
-	];
+<script>
+	import {goto} from '$app/navigation';
+	import {resolve} from '$app/paths';
+	import {showAuthModal} from '$lib/authModal';
 
-	let products = [
-		{ id: 1, name: 'Izzys1', price: 25, category: 'Print', artist: 1 },
-		{ id: 2, name: 'Amanda1', price: 5, category: 'Sticker', artist: 2 },
-		{ id: 3, name: 'Izzys2', price: 30, category: 'Print', artist: 1 },
-		{ id: 4, name: 'Cillian1', price: 3, category: 'Sticker', artist: 3 },
-		{ id: 5, name: 'Martin1', price: 40, category: 'Print', artist: 4 },
-		{ id: 6, name: 'Izzys3', price: 6, category: 'Sticker', artist: 1 }
-	];
+	function continueAsGuest() {
+		goto(resolve('/home'));
+	}
 
-	//Filters
-	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
-	let selectedArtist: number | null = null; // type of artist id or null
-	let sortOrder: string = ''; //sorting prices
-	let search: string = ''; //search bar logic
-
-	//Reactive statement to filter and sort products based on selected filters above
-	$: filteredProducts = products
-		.filter((p) => !selectedCategory || p.category === selectedCategory) //filter by category
-		.filter((p) => !selectedArtist || p.artist === selectedArtist) //filter by artist
-		.filter((p) => !search || p.name.toLowerCase().includes(search.toLowerCase())) //filter by search
-		//sort by price display
-		.sort((a, b) => {
-			if (!sortOrder) return 0; //no option selected
-			return sortOrder === 'lowToHigh' ? a.price - b.price : b.price - a.price;
-		});
+	function openAuthModal() {
+		showAuthModal.set(true);
+	}
 </script>
 
-<div class="container">
-	<div class="search-container">
-		<div class="search-bar">
-			<input
-				type="text"
-				placeholder="Search products..."
-				bind:value={search}
-				class="search-input"
-			/>
+<div class="start-page">
+    <div class ="background-overlay"></div>
 
-			<!--Dropdown foe categories -->
-			<select bind:value={selectedCategory} class="category-select">
-				<option value={null}>All Categories</option>
-				<option value="Sticker">Sticker</option>
-				<option value="Print">Print</option>
-			</select>
-		</div>
-	</div>
+	<div class="welcome-box">
+		<h1>Welcome to Inspire Co.</h1>
+		<p>Browse and explore all our wonderful pieces of art.</p>
 
-	<div class="artists-row">
-		{#each artistImages as artist}
-			<div
-				class="card artist-card"
-				role="button"
-				tabindex="0"
-				on:click={() => (selectedArtist = selectedArtist === artist.id ? null : artist.id)}
-				on:keydown={(e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						selectedArtist = selectedArtist === artist.id ? null : artist.id;
-						e.preventDefault();
-					}
-				}}
-				class:selected={selectedArtist === artist.id}
-			>
-				<div class="image-box"></div>
-				<div class="artist-name">
-					{artist.name}
-				</div>
-			</div>
-		{/each}
-	</div>
-
-	<div class="divider"></div>
-
-	<div class="header-box">
-		<div class="section-header">
-			<div class="section-title">
-				{#if selectedArtist}
-					<!-- display selected artist name or 'All' if not selected -->
-					Art by {artistImages.find((a) => a.id === selectedArtist)?.name}
-				{:else}
-					Art by All
-				{/if}
-			</div>
-
-			<!-- Dropdown for sorting options -->
-			<select bind:value={sortOrder} class="sort-select">
-				<option value="">Sort By</option>
-				<option value="lowToHigh">Price: Low → High</option>
-				<option value="highToLow">Price: High → Low</option>
-			</select>
-		</div>
-	</div>
-
-	<div class="gallery-grid">
-		{#each filteredProducts as item}
-			<div class="card">
-				<div class="image-box"></div>
-				<!-- placeholder for product image -->
-				<div class="name">{item.name} - ${item.price}</div>
-				<!-- name and price -->
-			</div>
-		{/each}
+		<button class="start-button" on:click={openAuthModal}>Log In / Sign Up</button>
+		<button class="start-button guest-button" on:click={continueAsGuest}>Continue as Guest</button>
 	</div>
 </div>
 
 <style>
-	.search-container {
-		position: sticky;
-		top: 0px;
-		z-index: 100;
-		background: var(--background-color, white);
-		padding: 10px 0;
-		height: 70px;
-		align-items: center;
-	}
-
-	.search-bar {
-		position: sticky; /* keeps it visible while scrolling */
-		top: 40px;
-		z-index: 100;
-		width: 100%;
-		max-width: 600px;
-		height: 30px;
-		margin: 0 auto;
+	.start-page {
+        position: relative;
+		min-height: calc(100vh - 140px);
 		display: flex;
-		background: var(--searchbar-background);
+		justify-content: center;
 		align-items: center;
-		padding: 10px;
-		gap: 10px;
+		background-color: var(--color-surface);
+		padding: var(--space-lg);
+        overflow: hidden;
 	}
 
-	.search-input {
-		flex: 1;
-		padding: 8px;
-		border: none;
-		outline: none;
-		background: transparent;
-		font-size: 14px;
-	}
+    .background-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: var(--transparent-overlay);
+        z-index: 1;
+    }
 
-	.category-select {
-		padding: 4px 8px;
-		border: none;
-	}
-
-	.artists-row {
-		/*Artists individual art display*/
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: var(--gap-lg);
-		justify-items: center;
-	}
-
-	.artist-card {
-		padding: 10px;
-		background: var(--card-background);
-		text-align: center;
-		cursor: pointer;
-		border-radius: 10px;
-	}
-
-	.artist-card .image-box {
+	.welcome-box {
+        position: relative;
+        z-index: 2;
 		width: 100%;
-		height: 260px;
-		background: var(--card-placeholder);
-		border-radius: 10px;
-		margin-bottom: 10px;
-	}
-
-	/*highlight selected artist*/
-	.artist-card.selected {
-		background: var(--divider-color);
-		color: white;
-	}
-
-	.divider {
-		height: 20px;
-		background: var(--divider-color);
-		margin: 40px 0;
-	}
-
-	.header-box {
-		width: 100%;
-		max-width: 700px;
-		margin: 0 auto 20px auto;
-		background: var(--searchbar-background);
-		padding: 6px 12px;
-	}
-
-	.section-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.section-title {
-		background: var(--searchbar-background);
-		padding: 5px 10px;
-		font-size: 14px;
-	}
-
-	/*Products display along the bottom*/
-	.gallery-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--gap-lg);
-		justify-items: center;
-	}
-
-	.card {
-		position: relative;
-		background: var(--card-background);
-		padding: var(--card-padding);
+		max-width: 380px;
+		min-height: 500px;
+		background-color: var(--overlay-background-transparent);
 		border-radius: var(--card-radius);
-		width: 100%;
-		max-width: 260px;
-		aspect-ratio: 3 / 4;
+		padding: var(--space-lg);
 		display: flex;
-		align-items: center;
 		flex-direction: column;
 		justify-content: center;
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
-	}
-
-	.card:hover {
-		transform: scale(1.03); /* Slightly enlarge */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Optional: slightly stronger shadow */
-	}
-
-	.image-box {
-		width: 100%;
-		height: 260px;
-		background: var(--card-placeholder);
-		border-radius: 10px;
-		margin-bottom: 10px;
-	}
-
-	.name {
-		font-weight: bold;
-		margin-top: 8px;
+		align-items: center;
 		text-align: center;
+		gap: var(--space-md);
 	}
 
-	.sort-select {
-		padding: 5px 10px;
-		font-size: 14px;
+	.welcome-box h1 {
+		margin: 0;
+		font-family: var(--font-heading);
+		color: var(--color-surface);
 	}
 
-	@media (max-width: 770px) {
-		.artists-row {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.gallery-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.container {
-			text-align: center;
-		}
+	.welcome-box p {
+		margin-bottom: var(--space-lg);
+		color: var(--color-surface);
+	}
+
+	.start-button {
+		width: 100%;
+		max-width: 240px;
+		padding: 12px;
+		border: none;
+		border-radius: var(--radius-md);
+		background-color: var(--searchbar-accent);
+		color: white;
+		font-size: var(--font-base);
+		font-family: var(--font-body);
+		cursor: pointer;
+	}
+
+    .start-button:hover {
+        background-color: var(--searchbar-background);
+        color: var(--text-primary);
+    }
+
+	.guest-button {
+		background-color: var(--searchbar-accent);
 	}
 
 	@media (max-width: 500px) {
-		.gallery-grid {
-			grid-template-columns: 1fr;
+		.welcome-box {
+			min-height: 420px;
+			padding: var(--space-md);
 		}
 
-		.section-header {
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.search-bar {
-			height: auto;
-			padding: 10px;
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.artists-row {
-			grid-template-columns: 1fr;
-		}
-		.card {
+		.start-button {
 			max-width: 100%;
 		}
 	}
