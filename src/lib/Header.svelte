@@ -1,11 +1,12 @@
 <script>
 	import {page} from '$app/stores';
-	import {showAuthModal} from '$lib/authModal.js';
+	import {showAuthModal, resetAuthState} from '$lib/authModal.js';
 	import {resolve} from '$app/paths';
 
 	$: isStartPage = $page.url.pathname === '/';
 	
 	function openAuthModal() {
+		resetAuthState();
 		showAuthModal.set(true);
 	}
 </script>

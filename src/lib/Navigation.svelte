@@ -1,10 +1,14 @@
+<script>
+  import {resolve} from '$app/paths';
+</script>
+
 <nav class="nav">
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
-  <a href="/catalogue">Catalogue</a>
-  <a href="/wishlist">Wishlist</a>
-  <a href="/account">Account</a>
+	<a href={resolve('/home')}>Home</a>
+	<a href={resolve('/about')}>About</a>
+	<a href={resolve('/contact')}>Contact</a>
+	<a href={resolve('/catalogue')}>Catalogue</a>
+	<a href={resolve('/wishlist')}>Wishlist</a>
+	<a href={resolve('/account')}>Account</a>
 </nav>
 
 <style>
