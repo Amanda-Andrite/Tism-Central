@@ -16,6 +16,24 @@
 		{ id: 6, name: 'Izzys3', price: 6, category: 'Sticker', artist: 1 }
 	];
 
+	let wishlist: number[] = [];
+	let notification: string = '';
+
+	function toggleWishlist(id: number) {
+		if (wishlist.includes(id)) {
+			wishlist = wishlist.filter((i) => i !== id);
+			showNotification('❌ Removed from wishlist');
+		} else {
+			wishlist = [...wishlist, id];
+			showNotification('💖 Added to wishlist');
+		}
+	}
+
+	function showNotification(msg: string) {
+		notification = msg;
+		setTimeout(() => (notification = ''), 1500);
+	}
+
 	//Filters
 	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
 	let selectedArtist: number | null = null; // type of artist id or null
@@ -33,6 +51,10 @@
 			return sortOrder === 'lowToHigh' ? a.price - b.price : b.price - a.price;
 		});
 </script>
+
+{#if notification}
+	<div class="notification show">{notification}</div>
+{/if}
 
 <div class="container">
 	<div class="search-container">
@@ -101,13 +123,25 @@
 	<div class="gallery-grid">
 		{#each filteredProducts as item}
 			<div class="card">
+				<button
+					class="wishlist-btn"
+					on:click={() => toggleWishlist(item.id)}
+					class:active={wishlist.includes(item.id)}
+				>
+					{wishlist.includes(item.id) ? '💖' : '🩶'}
+				</button>
+
 				<div class="image-box"></div>
 				<!-- placeholder for product image -->
-				<div class="name">{item.name} - ${item.price}</div>
+				<div class="name">{item.name}</div>
+				<div class="price">${item.price}</div>
 				<!-- name and price -->
 			</div>
 		{/each}
 	</div>
+	{#if filteredProducts.length === 0}
+		<div class="no-results">No products found. Try changing your filters.</div>
+	{/if}
 </div>
 
 <style>
@@ -253,6 +287,57 @@
 	.sort-select {
 		padding: 5px 10px;
 		font-size: 14px;
+	}
+
+	.wishlist-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		border: none;
+		background: white;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+		transition:
+			transform 0.2s ease,
+			background-color 0.2s ease;
+	}
+	.wishlist-btn:hover {
+		transform: scale(1.1);
+		background: #f5f5f5;
+	}
+
+	.notification {
+		position: fixed;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: black;
+		color: white;
+		padding: 10px 20px;
+		border-radius: 8px;
+		font-size: 14px;
+		z-index: 1000;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	/* Show notification */
+	.notification.show {
+		opacity: 1;
+	}
+
+	.no-results {
+		text-align: center;
+		margin-top: 40px;
+		font-size: 16px;
+		color: gray;
 	}
 
 	@media (max-width: 770px) {
