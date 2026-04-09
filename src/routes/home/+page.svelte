@@ -1,4 +1,22 @@
 <script lang="ts">
+	import { wishlist } from '$lib/stores/wishlist';
+	import { notification, showNotification } from '$lib/stores/notification';
+
+	function toggleWishlist(id: number) {
+		wishlist.update((items: number[]) => {
+			if (items.includes(id)) 
+			{
+				showNotification('Removed from wishlist');
+				return items.filter((i: number) => i !== id);
+			} 
+			else 
+			{
+				showNotification('Added to wishlist');
+				return [...items, id];
+			}
+		});
+	}
+
 	//keeping content looped.
 	let artistImages = [
 		{ id: 1, name: 'Izzy' },
@@ -15,24 +33,6 @@
 		{ id: 5, name: 'Martin1', price: 40, category: 'Print', artist: 4 },
 		{ id: 6, name: 'Izzys3', price: 6, category: 'Sticker', artist: 1 }
 	];
-
-	let wishlist: number[] = [];
-	let notification: string = '';
-
-	function toggleWishlist(id: number) {
-		if (wishlist.includes(id)) {
-			wishlist = wishlist.filter((i) => i !== id);
-			showNotification('❌ Removed from wishlist');
-		} else {
-			wishlist = [...wishlist, id];
-			showNotification('💖 Added to wishlist');
-		}
-	}
-
-	function showNotification(msg: string) {
-		notification = msg;
-		setTimeout(() => (notification = ''), 1500);
-	}
 
 	//Filters
 	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
@@ -52,8 +52,10 @@
 		});
 </script>
 
-{#if notification}
-	<div class="notification show">{notification}</div>
+{#if $notification}
+	<div class="notification show">
+		{$notification}
+	</div>
 {/if}
 
 <div class="container">
@@ -124,11 +126,8 @@
 		{#each filteredProducts as item}
 			<div class="card">
 				<button
-					class="wishlist-btn"
-					on:click={() => toggleWishlist(item.id)}
-					class:active={wishlist.includes(item.id)}
-				>
-					{wishlist.includes(item.id) ? '💖' : '🩶'}
+					class="wishlist-btn" on:click={() => toggleWishlist(item.id)}>
+					{$wishlist.includes(item.id) ? '💖' : '🩶'}
 				</button>
 
 				<div class="image-box"></div>
