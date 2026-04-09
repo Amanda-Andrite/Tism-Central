@@ -4,13 +4,10 @@
 
 	function toggleWishlist(id: number) {
 		wishlist.update((items: number[]) => {
-			if (items.includes(id)) 
-			{
+			if (items.includes(id)) {
 				showNotification('Removed from wishlist');
 				return items.filter((i: number) => i !== id);
-			} 
-			else 
-			{
+			} else {
 				showNotification('Added to wishlist');
 				return [...items, id];
 			}
@@ -125,8 +122,7 @@
 	<div class="gallery-grid">
 		{#each filteredProducts as item}
 			<div class="card">
-				<button
-					class="wishlist-btn" on:click={() => toggleWishlist(item.id)}>
+				<button class="wishlist-btn" on:click={() => toggleWishlist(item.id)}>
 					{$wishlist.includes(item.id) ? '💖' : '🩶'}
 				</button>
 
@@ -201,7 +197,7 @@
 
 	.artist-card .image-box {
 		width: 100%;
-		height: 260px;
+		aspect-ratio: 1 / 1;
 		background: var(--card-placeholder);
 		border-radius: 10px;
 		margin-bottom: 10px;
@@ -254,11 +250,10 @@
 		border-radius: var(--card-radius);
 		width: 100%;
 		max-width: 260px;
-		aspect-ratio: 3 / 4;
 		display: flex;
-		align-items: center;
 		flex-direction: column;
-		justify-content: center;
+		align-items: stretch;
+		justify-content: flex-start;
 		transition:
 			transform 0.2s ease,
 			box-shadow 0.2s ease;
@@ -271,7 +266,7 @@
 
 	.image-box {
 		width: 100%;
-		height: 260px;
+		aspect-ratio: 1 / 1;
 		background: var(--card-placeholder);
 		border-radius: 10px;
 		margin-bottom: 10px;
@@ -282,6 +277,12 @@
 		margin-top: 8px;
 		text-align: center;
 	}
+
+	.price {
+	text-align: center;
+	margin-top: 4px;
+	font-size: 14px;
+}
 
 	.sort-select {
 		padding: 5px 10px;
@@ -353,26 +354,49 @@
 
 	@media (max-width: 500px) {
 		.gallery-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.section-header {
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.search-bar {
-			height: auto;
-			padding: 10px;
-			flex-direction: column;
-			gap: 10px;
+			grid-template-columns: repeat(2, 1fr);
 		}
 
 		.artists-row {
-			grid-template-columns: 1fr;
+			grid-template-columns: repeat(2, 1fr);
 		}
-		.card {
+
+		.section-header {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.search-bar {
+			position: relative;
+			top: 0;
 			max-width: 100%;
+			justify-content: center;
+		}
+
+		.name {
+			font-size: 13px;
+			margin-top: 6px;
+		}
+
+		.price {
+			text-align: center;
+			font-size: 12px;
+			margin-top: 4px;
+		}
+
+		.artist-name {
+			font-size: 13px;
+		}
+
+		.card {
+			padding: 10px;
+		}
+
+		.image-box {
+			margin-bottom: 6px;
 		}
 	}
 </style>
