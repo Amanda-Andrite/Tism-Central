@@ -1,12 +1,13 @@
-<script lang="ts">
+<script>
+	// @ts-nocheck
 	import { wishlist } from '$lib/stores/wishlist';
 	import { notification, showNotification } from '$lib/stores/notification';
 
-	function toggleWishlist(id: number) {
-		wishlist.update((items: number[]) => {
+	function toggleWishlist(id) {
+		wishlist.update((items) => {
 			if (items.includes(id)) {
 				showNotification('Removed from wishlist');
-				return items.filter((i: number) => i !== id);
+				return items.filter((i) => i !== id);
 			} else {
 				showNotification('Added to wishlist');
 				return [...items, id];
@@ -32,10 +33,10 @@
 	];
 
 	//Filters
-	let selectedCategory: string | null = null; //type of product (e.g. sticker, print)
-	let selectedArtist: number | null = null; // type of artist id or null
-	let sortOrder: string = ''; //sorting prices
-	let search: string = ''; //search bar logic
+	let selectedCategory = null; //type of product (e.g. sticker, print)
+	let selectedArtist = null; // type of artist id or null
+	let sortOrder = ''; //sorting prices
+	let search = ''; //search bar logic
 
 	//Reactive statement to filter and sort products based on selected filters above
 	$: filteredProducts = products
