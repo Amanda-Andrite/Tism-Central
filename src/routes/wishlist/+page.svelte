@@ -1,6 +1,8 @@
-<script lang="ts">
+<script>
 	import { wishlist } from '$lib/stores/wishlist';
+	import { cartOverlayVisible, cartItems } from '$lib/stores/cart';
 
+	//All produvt details
 	let products = [
 		{ id: 1, name: 'Izzys1', price: 25 },
 		{ id: 2, name: 'Amanda1', price: 5 },
@@ -9,19 +11,28 @@
 		{ id: 5, name: 'Martin1', price: 40 },
 		{ id: 6, name: 'Izzys3', price: 6 }
 	];
-	$: wishlistItems = products.filter((p) => $wishlist.includes(p.id));
+	$: wishlistItems = products.filter((p) => $wishlist.includes(p.id)); //recalculate wishlist items whenever wishlist changes
+	//Add to cart function
+	function addToCart(product) {
+		if (!product || !product.name || !product.price) return;
+		cartItems.update((items) => [...items, product]); //add product to cart
+		cartOverlayVisible.set(true); //show cart overlay
+	}
 </script>
 
 <div class="container">
 	<h2>Your Wishlist</h2>
 	<div class="gallery-grid">
 		{#each wishlistItems as item}
+			<!--loop through wishlist items and display them-->
 			<div class="card">
 				<div class="image-box"></div>
 				<div class="text-group">
 					<div class="name">{item.name}</div>
 					<div class="price">${item.price}</div>
 				</div>
+				<!-- Add to cart button -->
+				<button class="add-cart-btn" on:click={() => addToCart(item)}>Add to Cart</button>
 			</div>
 		{/each}
 	</div>
@@ -84,6 +95,21 @@
 	.price {
 		font-size: 14px;
 		color: var(--text-color, #3b3a3a);
+	}
+
+	.add-cart-btn {
+		width: calc(100%-20px);
+		margin: 10px;
+		padding: 8px;
+		background: black;
+		color: white;
+		border: none;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 14px;
+		transition:
+			transform 0.2s ease,
+			background 0.2s ease;
 	}
 
 	@media (max-width: 770px) {

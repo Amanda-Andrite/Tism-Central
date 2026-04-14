@@ -1,6 +1,7 @@
 <script>
 	import Header from "$lib/Header.svelte";
 	import Footer from "$lib/Footer.svelte";
+	import CartOverlay from "$lib/components/cartOverlay.svelte";
 
 	import { showAuthModal, authState, resetAuthState } from '$lib/authModal.js';
 	import { goto } from '$app/navigation';
@@ -122,6 +123,7 @@
 	{/if}
 
 	<Footer />
+	<CartOverlay/>
 </div>
 
 <style>

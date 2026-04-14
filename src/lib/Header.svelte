@@ -2,6 +2,7 @@
 	import {page} from '$app/stores';
 	import {showAuthModal, resetAuthState} from '$lib/authModal.js';
 	import {resolve} from '$app/paths';
+	import {cartOverlayVisible} from '$lib/stores/cart';
 
 	$: isStartPage = $page.url.pathname === '/';
 	
@@ -37,9 +38,9 @@
 				<img src="/icons/heart-svgrepo-com.svg" alt="Wishlist" width="20" height="20" />
 			</a>
 
-			<a href={resolve("/cart")} class="icon-link" aria-label="Cart">
+			<button class="icon-button" on:click={() => cartOverlayVisible.set(true)} aria-label="Cart">
 				<img src="/icons/basket-2-svgrepo-com.svg" alt="Cart" width="24" height="24" />
-			</a>
+			</button>
 
 			<a href={resolve("/account")} class="icon-link" aria-label="Account">
 				<img src="/icons/profile-circle-svgrepo-com.svg" alt="Account" width="24" height="24" />
@@ -52,10 +53,10 @@
 <style>
 	.header {
 		display: flex;
-		justify-content: space-between; /* logo is placed next to navigation */
+		justify-content: space-between;
 		align-items: center;
 
-		padding: 0.25rem var(--space-lg); /*Changed to make header smaller*/
+		padding: 0.25rem var(--space-lg); 
 
 		background-color: var(--color-surface);
 		font-family: var(--font-heading);
@@ -72,8 +73,8 @@
 
 	/* Navigation links */
 	nav {
-		display: flex; /* horizontal layout */
-		gap: calc(var(--space-lg) * 2); /* wider spacing using variable */
+		display: flex; 
+		gap: calc(var(--space-lg) * 2); 
 		align-items: center;
 	}
 
@@ -92,14 +93,14 @@
 
 	.icon-group {
 		display: flex;
-		gap: 1.5rem; /* icons are closer together */
+		gap: 1.5rem; 
 		align-items: center;
 	}
 
 	/* Responsive to smaller screens */
 	@media (max-width: 768px) {
 		.header {
-			flex-direction: column; /* logo on top of nav */
+			flex-direction: column; 
 			align-items: flex-start;
 		}
 		.logo-area {
