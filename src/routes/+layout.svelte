@@ -1,7 +1,7 @@
 <script>
-	import Header from "$lib/Header.svelte";
-	import Footer from "$lib/Footer.svelte";
-	import CartOverlay from "$lib/components/cartOverlay.svelte";
+	import Header from '$lib/Header.svelte';
+	import Footer from '$lib/Footer.svelte';
+	import CartOverlay from '$lib/components/cartOverlay.svelte';
 
 	import { showAuthModal, authState, resetAuthState } from '$lib/authModal.js';
 	import { goto } from '$app/navigation';
@@ -45,8 +45,8 @@
 			successMessage: 'Login successful. Redirecting to home page...'
 		}));
 
-		localStorage.setItem('isLoggedIn','true');
-		localStorage.setItem('isGuest','false');
+		localStorage.setItem('isLoggedIn', 'true');
+		localStorage.setItem('isGuest', 'false');
 		localStorage.setItem('userEmail', currentState.email);
 
 		setTimeout(() => {
@@ -66,12 +66,7 @@
 
 	{#if $showAuthModal}
 		<div class="modal-overlay">
-			<div
-				class="modal-box"
-				role="dialog"
-				aria-modal="true"
-				aria-labelledby="auth-title"
-			>
+			<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="auth-title">
 				<button class="close-button" on:click={closeModal} aria-label="Close login modal">×</button>
 
 				<h2 id="auth-title">Log In / Sign Up</h2>
@@ -95,35 +90,24 @@
 				/>
 
 				{#if $authState.errorMessage}
-					<p
-						class="feedback-message error-message"
-						aria-live="assertive"
-						role="alert"
-					>
+					<p class="feedback-message error-message" aria-live="assertive" role="alert">
 						{$authState.errorMessage}
 					</p>
 				{/if}
 
 				{#if $authState.successMessage}
-					<p
-						class="feedback-message success-message"
-						aria-live="polite"
-					>
+					<p class="feedback-message success-message" aria-live="polite">
 						{$authState.successMessage}
 					</p>
 				{/if}
 
-				<Button
-					text="Continue"
-					buttonClass="continue-button"
-					on:click={continueToSite}
-				/>
+				<Button text="Continue" buttonClass="continue-button" on:click={continueToSite} />
 			</div>
 		</div>
 	{/if}
 
 	<Footer />
-	<CartOverlay/>
+	<CartOverlay />
 </div>
 
 <style>
@@ -199,9 +183,11 @@
 		font-size: 1.5rem;
 		cursor: pointer;
 		color: var(--text-primary);
-    	padding: var(--radius-sm);
+		padding: var(--radius-sm);
 		border-radius: 50%;
-		transition: background-color 0.2s ease, transform 0.15s ease;
+		transition:
+			background-color 0.2s ease,
+			transform 0.15s ease;
 	}
 
 	.close-button:hover {

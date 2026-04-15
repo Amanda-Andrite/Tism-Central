@@ -4,12 +4,12 @@
 
 	//All produvt details
 	let products = [
-		{ id: 1, name: 'Izzys1', price: 25 },
-		{ id: 2, name: 'Amanda1', price: 5 },
-		{ id: 3, name: 'Izzys2', price: 30 },
-		{ id: 4, name: 'Cillian1', price: 3 },
-		{ id: 5, name: 'Martin1', price: 40 },
-		{ id: 6, name: 'Izzys3', price: 6 }
+		{ id: 1, name: 'Izzys1', price: 25, size: 'A3', artists: 'Izzy' },
+		{ id: 2, name: 'Amanda1', price: 5, size: 'A4', artists: 'Amanda' },
+		{ id: 3, name: 'Izzys2', price: 30, size: 'A3', artists: 'Izzy' },
+		{ id: 4, name: 'Cillian1', price: 3, size: 'A4', artists: 'Cillian' },
+		{ id: 5, name: 'Martin1', price: 40, size: 'A3', artists: 'Martin' },
+		{ id: 6, name: 'Izzys3', price: 6, size: 'A4', artists: 'Izzy' }
 	];
 	$: wishlistItems = products.filter((p) => $wishlist.includes(p.id)); //recalculate wishlist items whenever wishlist changes
 	//Add to cart function
