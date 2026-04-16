@@ -1,9 +1,10 @@
 <script>
     export let text = '';
     export let buttonClass = '';
+	export let type = 'button';
 </script>
 
-<button class={`app-button ${buttonClass}`} on:click>
+<button type={type} class={`app-button ${buttonClass}`} on:click>
     {text}
 </button>
 
