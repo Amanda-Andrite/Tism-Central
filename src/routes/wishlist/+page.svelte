@@ -15,7 +15,15 @@
 	//Add to cart function
 	function addToCart(product) {
 		if (!product || !product.name || !product.price) return;
-		cartItems.update((items) => [...items, product]); //add product to cart
+		cartItems.update((items) => {
+		const existing = items.find((item) => item.id === product.id);
+			if(existing) {
+				return items.map((item) =>
+					item.id ===product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+				);
+			}
+			return [...items, { ...product, quantity: 1 }];
+		});
 		cartOverlayVisible.set(true); //show cart overlay
 	}
 </script>

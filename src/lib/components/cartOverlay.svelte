@@ -6,6 +6,25 @@
 		cartOverlayVisible.set(false);
 	}
 
+	function increaseQuantity(itemToUpdate) {
+		cartItems.update((items) =>
+			items.map((item) =>
+				item.id === itemToUpdate.id ? { ...item, quantity: item.quantity + 1 } : item
+			)
+		);
+	}
+
+	function decreaseQuantity(itemToUpdate) {
+		cartItems.update(
+			(items) =>
+				items
+					.map((item) =>
+						item.id === itemToUpdate.id ? { ...item, quantity: item.quantity - 1 } : item
+					)
+					.filter((item) => item.quantity > 0) //remove item if quantity drops to 0
+		);
+	}
+
 	function removeItem(itemToRemove) {
 		if (!itemToRemove || !itemToRemove.id) return;
 		//update cart items by filtering out the item to remove
@@ -17,7 +36,7 @@
 	<div
 		class="overlay-background"
 		role="button"
-		tabindex="0" 
+		tabindex="0"
 		on:click={closeOverlay}
 		on:keydown={(e) => {
 			if (e.key === 'Enter' || e.key === ' ') closeOverlay();
@@ -34,11 +53,21 @@
 				{#each $cartItems as item}
 					<!--loop through cart items and display them-->
 					<div class="cart-item">
-						<h4>{item.name}</h4>
-						<p><strong>Artist:</strong> {item.artists}</p>
-						<p><strong>Size:</strong> {item.size}</p>
-						<p><strong>Price:</strong> ${item.price}</p>
-						<button on:click={() => removeItem(item)}>Remove</button>
+						<div class="items-left">
+							<div class="item-image"></div>
+							<div class="quantity-controls">
+								<button on:click={() => decreaseQuantity(item)}>-</button>
+								<span>{item.quantity || 1}</span>
+								<button on:click={() => increaseQuantity(item)}>+</button>
+							</div>
+						</div>
+						<div class="item-details">
+							<h4>{item.name}</h4>
+							<p><strong>Artist:</strong> {item.artists}</p>
+							<p><strong>Size:</strong> {item.size}</p>
+							<p><strong>Price:</strong> ${item.price}</p>
+							<button on:click={() => removeItem(item)}>Remove</button>
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -83,11 +112,26 @@
 	}
 
 	.cart-item {
+		display: flex;
+		gap: 10px;
+		align-items: flex-start;
 		border: 1px solid #ddd;
 		border-radius: 10px;
 		padding: 10px;
 		background: #f9f9f9;
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.item-image {
+		width: 100px;
+		height: 100px;
+		background: #ddd;
+		border-radius: 6px;
+		flex-shrink: 0;
+	}
+
+	.item-details {
+		flex: 1;
 	}
 
 	.cart-item h4 {
@@ -107,5 +151,35 @@
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
+	}
+
+	.quantity-controls {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 8px;
+	}
+
+	.items-left {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.quantity-controls button {
+		width: 25px;
+		height: 25px;
+		border: none;
+		background: black;
+		color: white;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.quantity-controls span {
+		min-width: 20px;
+		text-align: center;
+		font-weight: bold;
 	}
 </style>
