@@ -1,7 +1,7 @@
 <script>
 	import {page} from '$app/stores';
 	import {showAuthModal, resetAuthState} from '$lib/authModal.js';
-	import {resolve} from '$app/paths';
+	import {resolve, base} from '$app/paths';
 	import {cartOverlayVisible} from '$lib/stores/cart';
 
 	$: isStartPage = $page.url.pathname === '/';
@@ -21,7 +21,7 @@
 	<nav>
 		<div class="icon-group">
 			<button class="icon-button" on:click={openAuthModal} aria-label="Account">
-				<img src="/icons/profile-circle-svgrepo-com.svg" alt="Account" width="24" height="24" />
+				<img src="{base}/icons/profile-circle-svgrepo-com.svg" alt="Account" width="24" height="24" />
 			</button>
 		</div>
 	</nav>
@@ -35,15 +35,15 @@
 		<a href={resolve("/contact")}>Contact</a>
 		<div class="icon-group">
 			<a href={resolve("/wishlist")} class="icon-link" aria-label="Wishlist">
-				<img src="/icons/heart-svgrepo-com.svg" alt="Wishlist" width="20" height="20" />
+				<img src="{base}/icons/heart-svgrepo-com.svg" alt="Wishlist" width="20" height="20" />
 			</a>
 
 			<button class="icon-button" on:click={() => cartOverlayVisible.set(true)} aria-label="Cart">
-				<img src="/icons/basket-2-svgrepo-com.svg" alt="Cart" width="24" height="24" />
+				<img src="{base}/icons/basket-2-svgrepo-com.svg" alt="Cart" width="24" height="24" />
 			</button>
 
 			<a href={resolve("/account")} class="icon-link" aria-label="Account">
-				<img src="/icons/profile-circle-svgrepo-com.svg" alt="Account" width="24" height="24" />
+				<img src="{base}/icons/profile-circle-svgrepo-com.svg" alt="Account" width="24" height="24" />
 			</a>
 		</div>
 	</nav>
