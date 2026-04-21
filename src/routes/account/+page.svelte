@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import { onMount } from 'svelte';
   let activeId = null;
   
@@ -42,7 +43,7 @@
   <div class="sidebar">
   <h1 class="account-username">{accountInfo.username}</h1>
     <div class="account-icon">
-      <img class="account-image" src="/favicon.png" alt="account-icon">
+      <img class="account-image" src="{base}/favicon.png" alt="account-icon">
     </div>
     <div class="account-settings-options">
     {#each buttons as button}
