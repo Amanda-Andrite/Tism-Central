@@ -1,5 +1,5 @@
 <script>
-	let showMore = false;
+	let showMore = false; //state to track if read more is clicked
 	function toggleText() {
 		//keeps track if user has clicked read more
 		showMore = !showMore;
