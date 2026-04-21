@@ -2,14 +2,15 @@
 	import { wishlist } from '$lib/stores/wishlist';
 	import { notification, showNotification } from '$lib/stores/notification';
 
+	//Function to toggle wishlist items and show notifications
 	function toggleWishlist(id) {
 		wishlist.update((items) => {
 			if (items.includes(id)) {
 				showNotification('Removed from wishlist');
-				return items.filter((i) => i !== id);
+				return items.filter((i) => i !== id); //remove item if already in wishlist
 			} else {
 				showNotification('Added to wishlist');
-				return [...items, id];
+				return [...items, id]; //add item to wishlist if not already there
 			}
 		});
 	}
@@ -44,8 +45,9 @@
 		.filter((p) => !search || p.name.toLowerCase().includes(search.toLowerCase())) //filter by search
 		//sort by price display
 		.sort((a, b) => {
-			if (!sortOrder) return 0; //no option selected
-			return sortOrder === 'lowToHigh' ? a.price - b.price : b.price - a.price;
+			if (sortOrder === 'lowToHigh') return a.price - b.price;//low to high
+			if (sortOrder === 'highToLow') return b.price - a.price;//high to low
+			return 0;
 		});
 </script>
 
@@ -75,15 +77,27 @@
 	</div>
 
 	<div class="artists-row">
+		<!-- Loop through artists and clickable -->
 		{#each artistImages as artist}
 			<div
 				class="card artist-card"
 				role="button"
 				tabindex="0"
-				on:click={() => (selectedArtist = selectedArtist === artist.id ? null : artist.id)}
+				on:click={() => {
+					if (selectedArtist === artist.id) {
+						selectedArtist = null;
+					} else {
+						selectedArtist = artist.id;
+					}
+				}}
 				on:keydown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
-						selectedArtist = selectedArtist === artist.id ? null : artist.id;
+						if (selectedArtist === artist.id) {
+							selectedArtist = null;
+						} else {
+							selectedArtist = artist.id;
+						}
+
 						e.preventDefault();
 					}
 				}}
@@ -122,7 +136,9 @@
 	<div class="gallery-grid">
 		{#each filteredProducts as item}
 			<div class="card">
+				<!-- Wishlist button to toggle item in wishlist and show notification -->
 				<button class="wishlist-btn" on:click={() => toggleWishlist(item.id)}>
+					<!-- Show filled heart if in wishlist, otherwise show empty heart -->
 					{$wishlist.includes(item.id) ? '💖' : '🩶'}
 				</button>
 
@@ -134,6 +150,7 @@
 			</div>
 		{/each}
 	</div>
+	<!--Show message if no products match filters -->
 	{#if filteredProducts.length === 0}
 		<div class="no-results">No products found. Try changing your filters.</div>
 	{/if}
@@ -260,8 +277,8 @@
 	}
 
 	.card:hover {
-		transform: scale(1.03); /* Slightly enlarge */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Optional: slightly stronger shadow */
+		transform: scale(1.03);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	}
 
 	.image-box {
@@ -279,10 +296,10 @@
 	}
 
 	.price {
-	text-align: center;
-	margin-top: 4px;
-	font-size: 14px;
-}
+		text-align: center;
+		margin-top: 4px;
+		font-size: 14px;
+	}
 
 	.sort-select {
 		padding: 5px 10px;
