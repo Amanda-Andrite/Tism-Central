@@ -131,7 +131,7 @@
     align-items: flex-start;
 }
 .account-icon {
-    width: 300px;
+    width: 19rem;
     height: 300px;
     margin-top: 20px;
     background-color: rgb(255, 255, 255);
@@ -139,7 +139,7 @@
     border-radius: 10px;
     justify-content: left;
     align-self: flex-start; 
-    margin-left: 5px; 
+    margin-left: 150px; 
 }
 .account-username {
     margin-top: 10px;
@@ -160,7 +160,7 @@
     gap: 10px;
     margin-top: 10px;
     align-self: flex-start; 
-    margin-left: 5px;
+    margin-left: 150px;
 }
 .account-settings-button {    
     padding: 25px 90px;
@@ -182,9 +182,9 @@
     flex-direction: column;
     padding-top: 100px;
     padding-left: 50px;
+    padding-right: 150px;
     gap: 50px;
-    width: 1000px;
-
+    width: 80%;
 
 }
 .settings-information label {
