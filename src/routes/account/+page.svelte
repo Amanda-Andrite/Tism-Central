@@ -1,6 +1,10 @@
 <script>
+  import { onMount } from 'svelte';
   let activeId = null;
-
+  
+  onMount(() => {
+    activeId = 1; // Set the first button as active on mount
+  });
   let accountInfo = {
     username: 'Username',
     email: 'user@example.com',
