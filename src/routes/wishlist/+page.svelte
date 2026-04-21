@@ -11,19 +11,31 @@
 		{ id: 5, name: 'Martin1', price: 40, size: 'A3', artists: 'Martin' },
 		{ id: 6, name: 'Izzys3', price: 6, size: 'A4', artists: 'Izzy' }
 	];
+
+	//reactive statement
 	$: wishlistItems = products.filter((p) => $wishlist.includes(p.id)); //recalculate wishlist items whenever wishlist changes
+
 	//Add to cart function
 	function addToCart(product) {
-		if (!product || !product.name || !product.price) return;
-		cartItems.update((items) => {
-		const existing = items.find((item) => item.id === product.id);
+		if(!product) return; //safety check
+
+		cartItems.update(function(items){
+			const existing = items.find(function(item) {
+				return item.id === product.id;//check if product already in cart
+			});
+
+			//if product already in cart, increment quantity, otherwise add new product with quantity 1
 			if(existing) {
-				return items.map((item) =>
-					item.id ===product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
-				);
+				return items.map(function(item) {
+					if (item.id === product.id){
+						return { ...item, quantity: item.quantity + 1 };//increment quantity if already in cart
+					}
+					return item;//otherwise return item unchanged
+				});
 			}
-			return [...items, { ...product, quantity: 1 }];
+			return [...items, { ...product, quantity: 1 }];//add new product to cart if not already in cart
 		});
+
 		cartOverlayVisible.set(true); //show cart overlay
 	}
 </script>
@@ -54,7 +66,7 @@
 
 	.gallery-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, 1fr); /*3 columns by default*/
 		gap: var(--gap-lg);
 		justify-items: center;
 	}
@@ -65,7 +77,7 @@
 		border-radius: var(--card-radius);
 		width: 100%;
 		max-width: 260px;
-		aspect-ratio: 3 / 4;
+		aspect-ratio: 3 / 4;  /*consistent aspect ratio for cards*/
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -106,7 +118,7 @@
 	}
 
 	.add-cart-btn {
-		width: calc(100%-20px);
+		width: calc(100% - 20px);
 		margin: 10px;
 		padding: 8px;
 		background: black;

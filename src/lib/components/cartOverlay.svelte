@@ -6,23 +6,22 @@
 		cartOverlayVisible.set(false);
 	}
 
-	function increaseQuantity(itemToUpdate) {
-		cartItems.update((items) =>
-			items.map((item) =>
-				item.id === itemToUpdate.id ? { ...item, quantity: item.quantity + 1 } : item
-			)
-		);
-	}
-
-	function decreaseQuantity(itemToUpdate) {
+	function changeQuantity(id, amount) {
 		cartItems.update(
 			(items) =>
 				items
-					.map((item) =>
-						item.id === itemToUpdate.id ? { ...item, quantity: item.quantity - 1 } : item
-					)
+					.map((item) => (item.id === id ? { ...item, quantity: item.quantity + amount } : item))
 					.filter((item) => item.quantity > 0) //remove item if quantity drops to 0
 		);
+	}
+
+	function increaseQuantity(item) {
+		changeQuantity(item.id, 1);
+	}
+
+	function decreaseQuantity(item) {
+		changeQuantity(item.id, -1);
+		
 	}
 
 	function removeItem(itemToRemove) {

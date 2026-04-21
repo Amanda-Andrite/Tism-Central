@@ -1,5 +1,4 @@
 <script>
-	// @ts-nocheck
 	import { wishlist } from '$lib/stores/wishlist';
 	import { notification, showNotification } from '$lib/stores/notification';
 
