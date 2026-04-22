@@ -12,6 +12,11 @@
     --searchbar-accent: #333;
     --divider-color: #161616;
 
+    --color-white: #ffffff;
+    --color-black: #000000; 
+    --color-hover-light: #f5f5f5; 
+    --color-shadow: rgba(0, 0, 0, 0.2); 
+
     --overlay-background-transparent: rgba(0, 0, 0, 0.5);
     --transparent-overlay:rgba(0, 0, 0, 0.2);
 
@@ -23,7 +28,9 @@
     /* Font Sizes */
     --font-base: 1rem;
     --font-sm: 0.875rem;
+    --font-md: 0.9rem;
     --font-lg: 1.25rem;
+    --font-xl: 2rem;
 
     /* Spacing */
     --space-sm: 0.5rem;
@@ -37,4 +44,5 @@
     /* Border Radius */
     --radius-sm: 4px;
     --radius-md: 8px;
+    --radius-lg: 12px; 
 }

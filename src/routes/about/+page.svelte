@@ -27,16 +27,16 @@
 	.about-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 60px;
-		padding: 60px 20px;
+		gap: var(--space-lg);
+		padding: var(--space-lg) var(--space-md);
 		align-items: center;
 		margin: 0 auto;
 	}
 
 	.group-image {
-		background: #acacac;
-		padding: 20px;
-		border-radius: 12px;
+		background: var(--card-background);
+		padding: var(--card-padding);
+		border-radius: var(--card-radius);
 		width: 100%;
 		max-width: 300px;
 		justify-self: center;
@@ -45,9 +45,8 @@
 	.image-placeholder {
 		width: 100%;
 		height: 260px;
-		background: #ebeaea;
-		border-radius: 10px;
-		position: relative;
+		background: var(--card-placeholder);
+		border-radius: var(--radius-md);
 	}
 
 	.content {
@@ -55,9 +54,9 @@
 	}
 
 	.content h1 {
-		font-size: 32px;
+		font-size: var(--font-xl);
 		font-weight: bold;
-		margin-bottom: 20px;
+		margin-bottom: var(--space-md);
 	}
 
 	@media (max-width: 768px) {
