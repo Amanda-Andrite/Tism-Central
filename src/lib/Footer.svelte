@@ -1,11 +1,11 @@
 <script>
-	import { resolve } from '$app/paths';
+	import { base } from '$app/paths';
 </script>
 
 <footer class="footer">
 	<p>Inspire Co. 2026</p>
 	<!-- Copyright Notice -->
-	<a href={resolve("/cart")} class="info-link">Shipping & Info</a>
+	<a href="{base}/cart" class="info-link">Shipping & Info</a>
 </footer>
 
 <style>
