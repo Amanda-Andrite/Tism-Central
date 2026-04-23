@@ -55,11 +55,14 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-
 		padding: 0.25rem var(--space-lg); 
-
 		background-color: var(--color-surface);
 		font-family: var(--font-heading);
+	}
+
+	.logo-area h1 {
+		font-family: var(--font-heading);
+		color: var(--link-color);
 	}
 
 	.icon-button {
@@ -79,7 +82,8 @@
 	}
 
 	nav a {
-		color: var(--text-primary);
+		font-family: var(--font-body);
+		color: var(--link-color);
 		text-decoration: none;
 		font-weight: bold;
 		display: flex;

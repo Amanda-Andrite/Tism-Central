@@ -39,6 +39,7 @@
 
 		cartOverlayVisible.set(true); //show cart overlay
 	}
+
 	function goToProduct(id) {
 		localStorage.setItem('selectedProductId', id);
 		goto(`/product-display`);
@@ -70,7 +71,7 @@
 			>
 				<div class="image-box"></div>
 				<button class="remove-btn" on:click|stopPropagation={() => removeFromWishlist(item.id)}>
-					-
+					➖
 				</button>
 				<div class="text-group">
 					<div class="name">{item.name}</div>
@@ -145,18 +146,18 @@
 	}
 
 	.price {
-		font-size: 14px;
-		color: var(--text-color, #3b3a3a);
+		font-size: var(--font-sm);
+		color: var(--text-color-secondary);
 	}
 
 	.add-cart-btn {
 		width: calc(100% - 20px);
 		margin: 10px;
 		padding: 8px;
-		background: black;
-		color: white;
+		background: var(--color-black);
+		color: var(--color-white);
 		border: none;
-		border-radius: 6px;
+		border-radius: var(--card-radius);
 		cursor: pointer;
 		font-size: 14px;
 		transition:
@@ -165,14 +166,14 @@
 	}
 
 	.add-cart-btn:hover {
-		background: #333;
+		background: var(--color-accent);
 	}
 
 	.empty-wishlist {
 		text-align: center;
-		font-size: 18px;
-		color: var(--text-color, #3b3a3a);
-		margin-top: 40px;
+		font-size: var(--font-md);
+		color: var(--text-secondary);
+		margin-top: var(--space-lg);
 	}
 
 	.remove-btn {
@@ -184,11 +185,12 @@
 		border-radius: var(--radius-md);
 		border: none;
 		background: var(--color-white);
+		color: var(--color-black);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 16px;
+		font-size: 18px;
 		box-shadow: 0 2px 6px var(--color-shadow);
 		transition:
 			transform 0.2s ease,
@@ -197,6 +199,7 @@
 
 	.remove-btn:hover {
 		transform: scale(1.1);
+		background: var(--color-hover-light);
 	}
 
 	@media (max-width: 770px) {

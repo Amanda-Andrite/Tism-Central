@@ -1,10 +1,11 @@
 :root {
     /* Colors */
     --color-background: #ffffff;
-    --color-surface: #f0f0f0;
+    --color-surface: #6c588b;
+    --link-color: #ffffff;
     --text-primary: #000000;
     --text-secondary: #444444;
-    --color-accent: #701aa1;
+    --color-accent: #d2bcf5;
 
     --card-background: #9d9b9b;
     --card-placeholder: #ebeaea;
@@ -21,8 +22,8 @@
     --transparent-overlay:rgba(0, 0, 0, 0.2);
 
     /* Typography */
-    --font-body: system-ui, sans-serif; 
-    --font-heading: system-ui, sans-serif;
+    --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
+    --font-heading:  "Staatliches", system-ui, sans-serif;
     --font-code: monospace;
 
     /* Font Sizes */

@@ -59,3 +59,17 @@ Martin McCarthy's (C00312014) Notes and Commitment to the project
     -added navigation options within the cart overlay including “continue shopping” and “checkout” buttons
     -developed a static shipping and information page accessible from all pages via the footer
     -integrated an icon-based shortcut to the shipping and information page directly from the cart overlay
+
+Amanda Andrites (C00309361) Notes and Commitment to the project
+    -designed, developed, and implemented the global header and footer, ensuring they are accessible across all pages
+    -initialised and configured navigation throughout the application
+    -added and integrated icons within the header for improved usability and accessibility
+    -designed and developed the homepage to display all products and their data
+    -implemented filtering functionality on the homepage, allowing users to filter by category and artist
+    -added a search bar to enable users to quickly find specific products
+    -implemented sorting functionality to organise products by price (low to high and high to low)
+    -integrated wishlist functionality on the homepage, allowing users to add and remove items directly
+    -implemented user feedback through notifications when items are added to or removed from the wishlist
+    -designed and developed a static “About Us” page using a grid layout
+    -integrated and managed custom fonts and began establishing a consistent colour system across the application
+    -configured and fixed linking issues using variables.css to ensure consistent styling across all pages

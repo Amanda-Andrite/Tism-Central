@@ -40,3 +40,19 @@ table {
 .hidden {
     display: none !important;
 }
+
+@font-face {
+    font-family: "Staatliches";
+    src: url("/fonts/Staatliches-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("/fonts/Atkinson-Hyperlegible-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}

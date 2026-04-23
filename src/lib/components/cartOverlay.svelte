@@ -1,7 +1,7 @@
 <script>
 	import { cartOverlayVisible, cartItems } from '$lib/stores/cart';
 	import { fly } from 'svelte/transition';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 
 	function closeOverlay() {
 		cartOverlayVisible.set(false);
@@ -53,7 +53,7 @@
 	<div class="overlay-panel" in:fly={{ x: 300, duration: 200 }} out:fly={{ x: 300, duration: 200 }}>
 		<div class="cart-header">
 			<h3>Your Cart</h3>
-			<a href="/cart" class="info-icon" on:click={closeOverlay} aria-label="Cart Info">
+			<a href={resolve("/cart")} class="info-icon" on:click={closeOverlay} aria-label="Cart Info">
 				<img src="{base}/icons/icons8-information-50.png" alt="Info Icon" width="24" height="24" />
 			</a>
 		</div>
@@ -162,8 +162,8 @@
 	.cart-item button {
 		margin-top: 5px;
 		padding: 5px;
-		background: #000000;
-		color: white;
+		background: var(--color-black);
+		color: var(--color-white);
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
@@ -187,8 +187,8 @@
 		width: 25px;
 		height: 25px;
 		border: none;
-		background: black;
-		color: white;
+		background: var(color-black);
+		color: var(--color-white);
 		border-radius: 4px;
 		cursor: pointer;
 	}
@@ -206,6 +206,8 @@
 	}
 
 	.info-icon img {
+		width: 22px;
+		height: 22px;
 		cursor: pointer;
 		opacity: 0.7;
 		transition: opacity 0.2s ease;
@@ -215,31 +217,39 @@
 		opacity: 1;
 	}
 
+	.cart-actions {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-divider);
+	}
+
 	.close-btn {
-		padding: 10px;
-		background: black;
-		color: white;
-		border: none;
-		border-radius: 5px;
+		padding: var(--space-sm);
+		border: 1px solid var(--text-primary);
+		background: var(--color-surface);
+		color: var(--text-primary);
+		border-radius: var(--card-radius);
 		cursor: pointer;
-	
+		transition: 0.2s ease;
 	}
 
 	.close-btn:hover {
-		background: #333;
+		background: var(--color-surface-hover);
 	}
 
 	.checkout-btn {
-		padding: 10px;
-		background: #000000;
-		color: white;
+		padding: var(--space-sm);
+		background: var(--text-primary);
+		color: var(--color-white);
 		border: none;
-		border-radius: 5px;
+		border-radius: var(--card-radius);
 		cursor: pointer;
 	}
 
 	.checkout-btn:hover {
 		background: #3a1441;
 	}
-
 </style>
