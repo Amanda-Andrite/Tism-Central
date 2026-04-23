@@ -178,7 +178,7 @@
 		position: sticky;
 		top: 0px;
 		z-index: 100;
-		background: var(--background-color, white);
+		background: var(--color-white);
 		padding: 10px 0;
 		height: 70px;
 		align-items: center;
@@ -205,12 +205,13 @@
 		border: none;
 		outline: none;
 		background: transparent;
-		font-size: 14px;
+		font-size: var(--font-sm);
 	}
 
 	.category-select {
 		padding: 4px 8px;
 		border: none;
+		font-size: var(--font-sm);
 	}
 
 	.artists-row {
@@ -222,25 +223,25 @@
 	}
 
 	.artist-card {
-		padding: 10px;
+		padding: var(--space-sm);
 		background: var(--card-background);
 		text-align: center;
 		cursor: pointer;
-		border-radius: 10px;
+		border-radius: var(--radius-md);
 	}
 
 	.artist-card .image-box {
 		width: 100%;
 		aspect-ratio: 1 / 1;
 		background: var(--card-placeholder);
-		border-radius: 10px;
+		border-radius: var(--radius-md);
 		margin-bottom: 10px;
 	}
 
 	/*highlight selected artist*/
 	.artist-card.selected {
 		background: var(--divider-color);
-		color: white;
+		color: var(--color-white);
 	}
 
 	.divider {
@@ -254,7 +255,7 @@
 		max-width: 700px;
 		margin: 0 auto 20px auto;
 		background: var(--searchbar-background);
-		padding: 6px 12px;
+		padding: var(--space-sm) var(--space-md);
 	}
 
 	.section-header {
@@ -265,8 +266,8 @@
 
 	.section-title {
 		background: var(--searchbar-background);
-		padding: 5px 10px;
-		font-size: 14px;
+		padding: var(--space-sm) var(--space-md);
+		font-size: var(--font-sm);
 	}
 
 	/*Products display along the bottom*/
@@ -295,14 +296,14 @@
 
 	.card:hover {
 		transform: scale(1.03);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 4px 12px var(--color-shadow);
 	}
 
 	.image-box {
 		width: 100%;
 		aspect-ratio: 1 / 1;
 		background: var(--card-placeholder);
-		border-radius: 10px;
+		border-radius: var(--radius-md);
 		margin-bottom: 10px;
 	}
 
@@ -315,12 +316,12 @@
 	.price {
 		text-align: center;
 		margin-top: 4px;
-		font-size: 14px;
+		font-size: var(--font-sm);
 	}
 
 	.sort-select {
 		padding: 5px 10px;
-		font-size: 14px;
+		font-size: var(--font-sm);
 	}
 
 	.wishlist-btn {
@@ -329,22 +330,22 @@
 		right: 10px;
 		width: 32px;
 		height: 32px;
-		border-radius: 8px;
+		border-radius: var(--radius-md);
 		border: none;
-		background: white;
+		background: var(--color-white);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 16px;
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 2px 6px var(--color-shadow);
 		transition:
 			transform 0.2s ease,
 			background-color 0.2s ease;
 	}
 	.wishlist-btn:hover {
 		transform: scale(1.1);
-		background: #f5f5f5;
+		background: var(--color-hover-light);
 	}
 
 	.notification {
@@ -352,11 +353,11 @@
 		bottom: 20px;
 		left: 50%;
 		transform: translateX(-50%);
-		background: black;
-		color: white;
+		background: var(--color-black);
+		color: var(--color-white);
 		padding: 10px 20px;
-		border-radius: 8px;
-		font-size: 14px;
+		border-radius: var(--radius-md);
+		font-size: var(--font-sm);
 		z-index: 1000;
 		opacity: 0;
 		transition: opacity 0.5s ease;
@@ -370,8 +371,8 @@
 	.no-results {
 		text-align: center;
 		margin-top: 40px;
-		font-size: 16px;
-		color: gray;
+		font-size: var(--font-base);
+		color: var(--text-secondary);
 	}
 
 	@media (max-width: 770px) {
