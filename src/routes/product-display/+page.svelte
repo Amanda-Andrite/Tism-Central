@@ -5,12 +5,18 @@
     import { onMount } from "svelte";
 
     let product = null;
+    let productId = null;
     let productName = "blank";
+    let productPrice = 0;
 
     onMount(()=>{
         const id = localStorage.getItem('selectedProductId')
         product = getProductById(id);
-        if(product) productName = product.name
+        if(product) {
+            productName = product.name;
+            productPrice = product.price;
+            productId = Number(product.id);
+        }
     });
 
     function addToCart(product) {
@@ -21,7 +27,7 @@
 				return item.id === product.id;//check if product already in cart
 			});
 
-			//if product already in cart, increment quantity, otherwise add new product with quantity 1
+			
 			if(existing) {
 				return items.map(function(item) {
 					if (item.id === product.id){
@@ -30,19 +36,35 @@
 					return item;//otherwise return item unchanged
 				});
 			}
-			return [...items, { ...product, quantity: 1 }];//add new product to cart if not already in cart
+			return [...items, { ...product, quantity: 1 }];
 		});
 
 		cartOverlayVisible.set(true); //show cart overlay
 	}
+
+    function toggleWishlist(id) {
+		wishlist.update((items) => {
+            console.log("before:", items, "clicked:", id);
+			if (items.includes(id)) {
+				return items.filter((i) => i !== id); 
+			} else {
+				return [...items, id];
+			}
+		});
+	}
+
+
 
 </script>
 
 <div class="product-display">
     <h1 class="product-name">{productName}</h1>
     <div class="product-top">
-        <div class="image">
-        </div>
+        <div class="image"></div>
+        <h2 class="product-price">€{productPrice}</h2>
+        <button type="button" class="wishlist-btn" on:click|stopPropagation={() => toggleWishlist(productId)} aria-label="Toggle wishlist">
+					{$wishlist.includes(productId) ? 'remove from wishlist' : 'add to wishlist'}
+		</button>
         <button class="add-cart-btn" on:click={() => addToCart(product)}>Add to Cart</button>
     </div>
     <div class="description">
@@ -77,6 +99,7 @@
 }
 .product-top {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
@@ -99,6 +122,12 @@
   border: 20px solid var(--card-background);
   border-radius: var(--card-radius);
 }
+.product-price {
+    display: flex;
+    align-self: flex-end;
+    margin-left: auto;
+    font-size:  var(--font-lg);
+}
 .add-cart-btn {
     display: flex;
     flex-direction: column;
@@ -111,6 +140,25 @@
     cursor: pointer;
     font-size: var(--font-base);
     margin-right: var(--card-padding);
+}
+.add-cart-btn:hover {
+    background-color: rgb(106, 106, 106);
+}
+.wishlist-btn {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    padding: 20px 40px;
+    border: none;
+    border-radius: var(--radius-md);
+    background-color: var(--card-background);
+    color: var(--color-black);
+    cursor: pointer;
+    font-size: var(--font-base);
+    margin-right: var(--card-padding);
+}
+.wishlist-btn:hover {
+    background-color: rgb(106, 106, 106);
 }
 
 @media (max-width: 768px) {

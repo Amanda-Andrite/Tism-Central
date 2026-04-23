@@ -1,6 +1,7 @@
 <script>
 	import { wishlist } from '$lib/stores/wishlist';
 	import { cartOverlayVisible, cartItems } from '$lib/stores/cart';
+	import { goto } from '$app/navigation';
 
 	//All produvt details
 	let products = [
@@ -38,6 +39,10 @@
 
 		cartOverlayVisible.set(true); //show cart overlay
 	}
+	function goToProduct(id) {
+		localStorage.setItem('selectedProductId', id);
+		goto(`/product-display`);
+	}
 </script>
 
 <div class="container">
@@ -45,7 +50,14 @@
 	<div class="gallery-grid">
 		{#each wishlistItems as item}
 			<!--loop through wishlist items and display them-->
-			<div class="card">
+			<div class="card" role="button"
+				tabindex="0" on:click={() => goToProduct(item.id)}
+				on:keydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						goToProduct(item.id);
+						e.preventDefault();
+					}
+				}}>
 				<div class="image-box"></div>
 				<div class="text-group">
 					<div class="name">{item.name}</div>
