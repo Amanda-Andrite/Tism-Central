@@ -54,7 +54,7 @@
 		<div class="cart-header">
 			<h3>Your Cart</h3>
 			<a href={resolve("/cart")} class="info-icon" aria-label="Info">
-				<img src="{base}/icons/icons8-information-64 (1).svg" alt="Information" width="20" height="20" />
+				<img src="{base}/icons/info-icon.svg" alt="Information" width="20" height="20" />
 			</a>
 		</div>
 		{#if $cartItems.length === 0}
