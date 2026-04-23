@@ -62,7 +62,7 @@
 
 	.info-section {
 		padding: var(--space-md);
-		background: var(--color-surface);
+		background: var(--card-background);
 		border-radius: var(--card-radius);
 
 		display: flex;

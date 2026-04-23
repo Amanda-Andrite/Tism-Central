@@ -30,7 +30,6 @@
 	<nav>
 		<!-- Navigation links -->
 		<a href={resolve("/home")}>Home</a>
-		<a href={resolve("/catalogue")}>Catalogue</a>
 		<a href={resolve("/about")}>About</a>
 		<a href={resolve("/contact")}>Contact</a>
 		<div class="icon-group">

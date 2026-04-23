@@ -332,12 +332,15 @@
     color: var(--color-background);
     cursor: pointer;
     font-size: 16px;
+    transition:
+			transform 0.2s ease,
+			background 0.2s ease;
 }
 .account-settings-button:hover {
-    background-color: rgb(106, 106, 106);
+    background-color: #4c2660;
 }
 .account-settings-button.active {
-    background-color: rgb(106, 106, 106);
+    background-color: var(--color-hover-button);
 }
 .settings-information{
     display: flex;
@@ -386,9 +389,12 @@
     color: var(--color-background);
     cursor: pointer;
     font-size: 16px;
+    transition:
+			transform 0.2s ease,
+			background 0.2s ease;
 }
 .save-button:hover {
-    background-color: rgb(106, 106, 106);
+    background-color: var(--color-hover-button);
 }
 .login-button {
     display: flex;
@@ -401,9 +407,12 @@
     color: var(--color-background);
     cursor: pointer;
     font-size: 16px;
+    transition:
+			transform 0.2s ease,
+			background 0.2s ease;
 }
 .login-button:hover {
-    background-color: rgb(106, 106, 106);
+    background-color: var(--color-hover-button);
 }
 	.notification {
 		position: fixed;

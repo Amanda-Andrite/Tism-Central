@@ -3,15 +3,17 @@
     --color-background: #ffffff;
     --color-surface: #6c588b;
     --link-color: #ffffff;
-    --text-primary: #000000;
+    --text-primary: #381b49;
     --text-secondary: #444444;
     --color-accent: #d2bcf5;
+    --color-button: #381b49;
+    --color-hover-button: #1d0e25;
 
-    --card-background: #9d9b9b;
-    --card-placeholder: #ebeaea;
-    --searchbar-background: #bbb;
+    --card-background: #b2a3ba;
+    --card-placeholder: #f5f0ea;
+    --searchbar-background: #c1b5be;
     --searchbar-accent: #333;
-    --divider-color: #161616;
+    --divider-color: #6c588b;
 
     --color-white: #ffffff;
     --color-black: #000000; 

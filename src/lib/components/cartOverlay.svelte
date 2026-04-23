@@ -134,14 +134,14 @@
 		border: 1px solid #ddd;
 		border-radius: 10px;
 		padding: 10px;
-		background: #f9f9f9;
+		background: var(--card-background);
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 	}
 
 	.item-image {
 		width: 100px;
 		height: 100px;
-		background: #ddd;
+		background: var(--card-placeholder);
 		border-radius: 6px;
 		flex-shrink: 0;
 	}
@@ -162,7 +162,7 @@
 	.cart-item button {
 		margin-top: 5px;
 		padding: 5px;
-		background: var(--color-black);
+		background: var(--color-button);
 		color: var(--color-white);
 		border: none;
 		border-radius: 5px;
@@ -187,7 +187,7 @@
 		width: 25px;
 		height: 25px;
 		border: none;
-		background: var(--color-black);
+		background: var(--color-button);
 		color: var(--color-white);
 		border-radius: 4px;
 		cursor: pointer;
@@ -230,14 +230,14 @@
 		padding: var(--space-sm);
 		border: 1px solid var(--text-primary);
 		background: var(--color-surface);
-		color: var(--text-primary);
+		color: var(--color-white);
 		border-radius: var(--card-radius);
 		cursor: pointer;
 		transition: 0.2s ease;
 	}
 
 	.close-btn:hover {
-		background: var(--color-surface-hover);
+		background: var(--color-hover-button);
 	}
 
 	.checkout-btn {
@@ -250,6 +250,6 @@
 	}
 
 	.checkout-btn:hover {
-		background: #3a1441;
+		background: var(--color-hover-button);
 	}
 </style>

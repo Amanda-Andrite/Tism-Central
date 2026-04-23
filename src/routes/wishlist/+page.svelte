@@ -154,7 +154,7 @@
 		width: calc(100% - 20px);
 		margin: 10px;
 		padding: 8px;
-		background: var(--color-black);
+		background: var(--color-button);
 		color: var(--color-white);
 		border: none;
 		border-radius: var(--card-radius);
@@ -166,7 +166,7 @@
 	}
 
 	.add-cart-btn:hover {
-		background: var(--color-accent);
+		background: var(--color-hover-button);
 	}
 
 	.empty-wishlist {

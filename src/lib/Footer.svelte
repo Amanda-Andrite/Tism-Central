@@ -15,18 +15,19 @@
 		text-align: center;
 		font-family: var(--font-body);
 		font-size: var(--font-sm);
-		color: var(--text-secondary);
+		color: var(--link-color);
 		background-color: var(--color-surface);
 		border-top: 1px solid rgb(220, 220, 207);
 	}
 
 	.info-link {
-		color: black;
+		color: whitesmoke;
 		padding: 6px 12px;
+		border-radius: var(--radius-sm);
 	}
 
 	.info-link:hover {
-		color: var(--text-primary);
+		color: var(--color-accent);
 	}
 
 	/* Responsive to smaller screens */
