@@ -1,6 +1,7 @@
 <script>
 	import { wishlist } from '$lib/stores/wishlist';
 	import { notification, showNotification } from '$lib/stores/notification';
+	import { goto } from '$app/navigation';
 
 	//Function to toggle wishlist items and show notifications
 	function toggleWishlist(id) {
@@ -49,6 +50,11 @@
 			if (sortOrder === 'highToLow') return b.price - a.price;//high to low
 			return 0;
 		});
+
+	function goToProduct(id) {
+		localStorage.setItem('selectedProductId', id);
+		goto(`/product-display`);
+	}
 </script>
 
 {#if $notification}
@@ -135,9 +141,20 @@
 
 	<div class="gallery-grid">
 		{#each filteredProducts as item}
-			<div class="card">
-				<!-- Wishlist button to toggle item in wishlist and show notification -->
-				<button class="wishlist-btn" on:click={() => toggleWishlist(item.id)}>
+			<div
+				class="card"
+				role="button"
+				tabindex="0"
+				on:click={() => goToProduct(item.id)}
+				on:keydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						goToProduct(item.id);
+						e.preventDefault();
+					}
+				}}
+			>
+				<!-- Wishlist button to toggle item in wishlist and show notification. stopPropagation stops wishlist from causing a product page to appear -->
+				<button type="button" class="wishlist-btn" on:click|stopPropagation={() => toggleWishlist(item.id)} aria-label="Toggle wishlist">
 					<!-- Show filled heart if in wishlist, otherwise show empty heart -->
 					{$wishlist.includes(item.id) ? '💖' : '🩶'}
 				</button>
