@@ -2,6 +2,7 @@
   import { base } from '$app/paths';
   import { onMount } from 'svelte';
   import { notification, showNotification } from '$lib/stores/notification';
+  import { showAuthModal, resetAuthState } from '$lib/authModal';
   let activeId = 1;
   let accountInfo = {};
   let privacySettings = {};
@@ -101,7 +102,10 @@
     localStorage.setItem('province', cardInfo.province);
     localStorage.setItem('postalCode', cardInfo.postalCode);
   }
-
+  function openAuthModal() {
+		resetAuthState();
+		showAuthModal.set(true);
+	}
   
 
 </script>
@@ -266,11 +270,14 @@
       {/if}
     </div>
     {/if}
+    <div class="button-group">
     {#if !isGuest}
       <button class="save-button" on:click={saveInfo()}> Save</button>
     {:else}
       <button class="save-button" on:click={showNotification("Please log in to save your information.")}> Save</button>
+      <button class="login-button" on:click={openAuthModal}>Log In / Sign Up</button>
     {/if}
+    </div>
 
   </div>
 </div>
@@ -362,6 +369,12 @@
     border-radius: var(--radius-sm);
     width: 300px;
 }
+.button-group {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    justify-content: flex-end;
+}
 .save-button {
     display: flex;
     flex-direction: column;
@@ -373,6 +386,24 @@
     color: var(--color-background);
     cursor: pointer;
     font-size: 16px;
+}
+.save-button:hover {
+    background-color: rgb(106, 106, 106);
+}
+.login-button {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    padding: var(--card-padding) 40px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--divider-color);
+    color: var(--color-background);
+    cursor: pointer;
+    font-size: 16px;
+}
+.login-button:hover {
+    background-color: rgb(106, 106, 106);
 }
 	.notification {
 		position: fixed;
