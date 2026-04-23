@@ -1,7 +1,11 @@
+<script>
+	import { resolve } from '$app/paths';
+</script>
+
 <footer class="footer">
 	<p>Inspire Co. 2026</p>
 	<!-- Copyright Notice -->
-	<a href="/cart" class="info-link">Shipping & Info</a>
+	<a href={resolve("/cart")} class="info-link">Shipping & Info</a>
 </footer>
 
 <style>
@@ -18,7 +22,7 @@
 
 	.info-link {
 		color: black;
-    padding: 6px 12px;
+		padding: 6px 12px;
 	}
 
 	.info-link:hover {
