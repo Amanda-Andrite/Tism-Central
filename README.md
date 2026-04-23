@@ -49,3 +49,13 @@ Cillian Doyles (C00311110) Notes and Commitment to the project
     - implemented the feature created by amanda to add items to the wishlist on the product display page and refactured the code to work with my own, saving time rather than designing a different system
     - implemented the add to cart feature created by martin to the product display page and again refactured the code to work with my own
     - made both web pages restructure themselves vertically when width is shrunk to a certain point   
+
+Martin McCarthy's (C00312014) Notes and Commitment to the project
+    -designed, developed and implemented the wishlist page, allowing users to save and view products using local storage
+    -implemented functionality to add items to the wishlist from both the homepage and product display page
+    -added a remove feature on the wishlist page to allow users to easily manage and delete saved items
+    -designed and implemented a cart overlay that slides in from the right, displaying all selected cart items
+    -implemented functionality within the cart overlay to increase and decrease product quantities
+    -added navigation options within the cart overlay including “continue shopping” and “checkout” buttons
+    -developed a static shipping and information page accessible from all pages via the footer
+    -integrated an icon-based shortcut to the shipping and information page directly from the cart overlay

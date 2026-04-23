@@ -18,23 +18,23 @@
 
 	//Add to cart function
 	function addToCart(product) {
-		if(!product) return; //safety check
+		if (!product) return; //safety check
 
-		cartItems.update(function(items){
-			const existing = items.find(function(item) {
-				return item.id === product.id;//check if product already in cart
+		cartItems.update(function (items) {
+			const existing = items.find(function (item) {
+				return item.id === product.id; //check if product already in cart
 			});
 
 			//if product already in cart, increment quantity, otherwise add new product with quantity 1
-			if(existing) {
-				return items.map(function(item) {
-					if (item.id === product.id){
-						return { ...item, quantity: item.quantity + 1 };//increment quantity if already in cart
+			if (existing) {
+				return items.map(function (item) {
+					if (item.id === product.id) {
+						return { ...item, quantity: item.quantity + 1 }; //increment quantity if already in cart
 					}
-					return item;//otherwise return item unchanged
+					return item; //otherwise return item unchanged
 				});
 			}
-			return [...items, { ...product, quantity: 1 }];//add new product to cart if not already in cart
+			return [...items, { ...product, quantity: 1 }]; //add new product to cart if not already in cart
 		});
 
 		cartOverlayVisible.set(true); //show cart overlay
@@ -43,6 +43,12 @@
 		localStorage.setItem('selectedProductId', id);
 		goto(`/product-display`);
 	}
+
+	function removeFromWishlist(id) {
+		wishlist.update((items) => {
+			return items.filter((i) => i !== id); //remove product from wishlist by filtering out the id
+		});
+	}
 </script>
 
 <div class="container">
@@ -50,25 +56,38 @@
 	<div class="gallery-grid">
 		{#each wishlistItems as item}
 			<!--loop through wishlist items and display them-->
-			<div class="card" role="button"
-				tabindex="0" on:click={() => goToProduct(item.id)}
+			<div
+				class="card"
+				role="button"
+				tabindex="0"
+				on:click={() => goToProduct(item.id)}
 				on:keydown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
 						goToProduct(item.id);
 						e.preventDefault();
 					}
-				}}>
+				}}
+			>
 				<div class="image-box"></div>
+				<button class="remove-btn" on:click|stopPropagation={() => removeFromWishlist(item.id)}>
+					-
+				</button>
 				<div class="text-group">
 					<div class="name">{item.name}</div>
 					<div class="price">${item.price}</div>
 				</div>
 				<!-- Add to cart button -->
-				<button class="add-cart-btn" on:click={() => addToCart(item)}>Add to Cart</button>
+				<button class="add-cart-btn" on:click|stopPropagation={() => addToCart(item)}>
+					Add to Cart
+				</button>
 			</div>
 		{/each}
 	</div>
 </div>
+
+{#if wishlistItems.length === 0}
+	<p class="empty-wishlist">Your wishlist is empty.</p>
+{/if}
 
 <style>
 	.container h2 {
@@ -89,10 +108,11 @@
 		border-radius: var(--card-radius);
 		width: 100%;
 		max-width: 260px;
-		aspect-ratio: 3 / 4;  /*consistent aspect ratio for cards*/
+		aspect-ratio: 3 / 4; /*consistent aspect ratio for cards*/
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		position: relative;
 		transition:
 			transform 0.2s ease,
 			box-shadow 0.2s ease;
@@ -142,6 +162,41 @@
 		transition:
 			transform 0.2s ease,
 			background 0.2s ease;
+	}
+
+	.add-cart-btn:hover {
+		background: #333;
+	}
+
+	.empty-wishlist {
+		text-align: center;
+		font-size: 18px;
+		color: var(--text-color, #3b3a3a);
+		margin-top: 40px;
+	}
+
+	.remove-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		width: 32px;
+		height: 32px;
+		border-radius: var(--radius-md);
+		border: none;
+		background: var(--color-white);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		box-shadow: 0 2px 6px var(--color-shadow);
+		transition:
+			transform 0.2s ease,
+			background-color 0.2s ease;
+	}
+
+	.remove-btn:hover {
+		transform: scale(1.1);
 	}
 
 	@media (max-width: 770px) {

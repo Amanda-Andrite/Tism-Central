@@ -1,6 +1,7 @@
 <script>
 	import { cartOverlayVisible, cartItems } from '$lib/stores/cart';
 	import { fly } from 'svelte/transition';
+	import { base } from '$app/paths';
 
 	function closeOverlay() {
 		cartOverlayVisible.set(false);
@@ -21,7 +22,6 @@
 
 	function decreaseQuantity(item) {
 		changeQuantity(item.id, -1);
-		
 	}
 
 	function removeItem(itemToRemove) {
@@ -29,6 +29,13 @@
 		//update cart items by filtering out the item to remove
 		cartItems.update((items) => items.filter((item) => item.id !== itemToRemove.id)); //remove item from cart
 	}
+
+	//calculate total price whenever cart items change
+	$: totalPrice = $cartItems.reduce((total, item) => {
+		const quantity = item.quantity || 1; //default to 1 if quantity is not defined
+		const itemTotal = item.price * quantity; //calculate total for item
+		return total + itemTotal; //add to running total
+	}, 0);
 </script>
 
 {#if $cartOverlayVisible}
@@ -44,7 +51,12 @@
 
 	<!-- Cart overlay panel -->
 	<div class="overlay-panel" in:fly={{ x: 300, duration: 200 }} out:fly={{ x: 300, duration: 200 }}>
-		<h3>Your Cart</h3>
+		<div class="cart-header">
+			<h3>Your Cart</h3>
+			<a href="/cart" class="info-icon" on:click={closeOverlay} aria-label="Cart Info">
+				<img src="{base}/icons/icons8-information-50.png" alt="Info Icon" width="24" height="24" />
+			</a>
+		</div>
 		{#if $cartItems.length === 0}
 			<p>Your cart is empty.</p>
 		{:else}
@@ -71,7 +83,12 @@
 				{/each}
 			</div>
 		{/if}
-		<button on:click={closeOverlay}>Close</button>
+		<div class="cart-actions">
+			<button class="close-btn" on:click={closeOverlay}>Continue Shopping</button>
+			<button class="checkout-btn">
+				Checkout - ${totalPrice}
+			</button>
+		</div>
 	</div>
 {/if}
 
@@ -181,4 +198,48 @@
 		text-align: center;
 		font-weight: bold;
 	}
+
+	.cart-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.info-icon img {
+		cursor: pointer;
+		opacity: 0.7;
+		transition: opacity 0.2s ease;
+	}
+
+	.info-icon img:hover {
+		opacity: 1;
+	}
+
+	.close-btn {
+		padding: 10px;
+		background: black;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	
+	}
+
+	.close-btn:hover {
+		background: #333;
+	}
+
+	.checkout-btn {
+		padding: 10px;
+		background: #000000;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.checkout-btn:hover {
+		background: #3a1441;
+	}
+
 </style>
