@@ -53,8 +53,8 @@
 	<div class="overlay-panel" in:fly={{ x: 300, duration: 200 }} out:fly={{ x: 300, duration: 200 }}>
 		<div class="cart-header">
 			<h3>Your Cart</h3>
-			<a href={resolve("/cart")} class="info-icon" on:click={closeOverlay} aria-label="Cart Info">
-				<img src="{base}/icons/icons8-information-50.png" alt="Info Icon" width="24" height="24" />
+			<a href={resolve("/cart")} class="info-icon" aria-label="Info">
+				<img src="{base}/icons/icons8-information-64 (1).svg" alt="Information" width="20" height="20" />
 			</a>
 		</div>
 		{#if $cartItems.length === 0}
@@ -187,7 +187,7 @@
 		width: 25px;
 		height: 25px;
 		border: none;
-		background: var(color-black);
+		background: var(--color-black);
 		color: var(--color-white);
 		border-radius: 4px;
 		cursor: pointer;
