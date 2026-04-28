@@ -5,16 +5,18 @@
 	import {onMount} from 'svelte';
 	import { showAuthModal, resetAuthState } from '$lib/authModal';
 
-
+	//Runs when the start page first loads in the browser, Checks the local storage to see if user has already logged in or continued as a guest
 	onMount(() => {
 		const isLoggedIn = localStorage.getItem('isLoggedIn');
 		const isGuest = localStorage.getItem('isGuest');
 
+		//if user already has a session it skips start page and takes user straight to home page
 		if(isLoggedIn === 'true' || isGuest === 'true') {
 			goto(resolve('/home'));
 		}
 	});
 
+	//User can still access the website without an account, and stores their status in localStorage
 	function continueAsGuest() {
 		localStorage.setItem('isGuest','true');
 		localStorage.setItem('isLoggedIn','false');
@@ -23,8 +25,9 @@
 		goto(resolve('/home'));
 	}
 
+	//Opens login/sign-up modal from shared auth store
 	function openAuthModal() {
-		resetAuthState();
+		resetAuthState(); //clears old form values/error messages before showing modal 
 		showAuthModal.set(true);
 	}
 </script>
@@ -35,7 +38,7 @@
 	<div class="welcome-box">
 		<h1>Welcome to Inspire Co.</h1>
 		<p>Browse and explore all our wonderful pieces of art.</p>
-
+		
 		<Button
 			text="Log In / Sign Up"
 			buttonClass="start-button"
@@ -97,6 +100,7 @@
 		color: var(--color-white);
 	}
 
+	/* Makes the welcome card fit depending on the screen size*/
 	@media (max-width: 500px) {
 		.welcome-box {
 			min-height: 420px;

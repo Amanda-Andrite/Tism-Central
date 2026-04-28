@@ -3,11 +3,17 @@
 	import Footer from '$lib/Footer.svelte';
 	import CartOverlay from '$lib/components/cartOverlay.svelte';
 
+	//Shared authentication modal state
 	import { showAuthModal, authState, resetAuthState } from '$lib/authModal.js';
+	
+	//SvelteKit nav helpers
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+
+	//Reusable Button svelte 
 	import Button from '$lib/Button.svelte';
 
+	//Updates emails inside the shared auth store
 	function updateEmail(value) {
 		authState.update((state) => ({
 			...state,
@@ -15,6 +21,7 @@
 		}));
 	}
 
+	//Updates the password inside the shared auth store
 	function updatePassword(value) {
 		authState.update((state) => ({
 			...state,
@@ -22,14 +29,17 @@
 		}));
 	}
 
+	//Closes auth modal and clears olf form data/messages
 	function closeModal() {
 		showAuthModal.set(false);
 		resetAuthState();
 	}
 
+	//Handles the login/sign-up continue action
 	function continueToSite() {
 		const currentState = $authState;
-
+		
+		//Stops users entering without both fields filled in
 		if (!currentState.email.trim() || !currentState.password.trim()) {
 			authState.update((state) => ({
 				...state,
@@ -39,16 +49,19 @@
 			return;
 		}
 
+		//User feedback when loging in
 		authState.update((state) => ({
 			...state,
 			errorMessage: '',
 			successMessage: 'Login successful. Redirecting to home page...'
 		}));
 
+		//Saves session information
 		localStorage.setItem('isLoggedIn', 'true');
 		localStorage.setItem('isGuest', 'false');
 		localStorage.setItem('userEmail', currentState.email);
 
+		//Small delay allows success message to appear before navigating
 		setTimeout(() => {
 			showAuthModal.set(false);
 			resetAuthState();

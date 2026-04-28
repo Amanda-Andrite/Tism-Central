@@ -1,14 +1,15 @@
 <script>
 	import {page} from '$app/stores';
-	import {showAuthModal, resetAuthState} from '$lib/authModal.js';
-	import {resolve, base} from '$app/paths';
+	import {showAuthModal, resetAuthState} from '$lib/authModal.js'; //Shared auth modal state
+	import {resolve, base} from '$app/paths'; //For routing and asset paths
 	import {cartOverlayVisible} from '$lib/stores/cart';
 
 	$: isStartPage = $page.url.pathname === '/';
 	
+	//Opens start page from header logo/business name
 	function openAuthModal() {
-		resetAuthState();
-		showAuthModal.set(true);
+		resetAuthState(); //Clears previous input/errors
+		showAuthModal.set(true); //Displays modal
 	}
 </script>
 

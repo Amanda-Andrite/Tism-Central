@@ -6,14 +6,18 @@
 	let email = '';
 	let message = '';
 
+	//UI and message state
 	let showSuccessModal = false;
 	let submittedMessages = [];
 	let editingId = null;
 	let modalTitle = 'Message Received';
+
+	//PRevents local storage from saving before old messages have loaded
 	let storageLoaded = false;
 
 	const maxMessageLength = 500;
 
+	//Loads saved messages from localStorage when the page opens
 	onMount(() => {
 		const savedMessages = localStorage.getItem('submittedMessages');
 
@@ -23,6 +27,7 @@
 		storageLoaded = true;
 	});
 
+	//Saves messages whenever submittedMessages changes
 	$: if(storageLoaded) {
 		localStorage.setItem('submittedMessages', JSON.stringify(submittedMessages));
 	}
@@ -34,11 +39,13 @@
 		editingId = null;
 	}
 
+	//Handles both creating a new message and updating an exsisting message
 	function handleSubmit() {
 		if (!name.trim() || !email.trim() || !message.trim()) {
 			return;
 		}
 
+		//If editingId has a value, update the exsisting message
 		if (editingId !== null) {
 			submittedMessages = submittedMessages.map((item) =>
 				item.id === editingId
@@ -53,6 +60,7 @@
 
 			modalTitle = 'Message Updated';
 		} else {
+			//Otherwise create a new message with a unique id
 			submittedMessages = [
 				...submittedMessages,
 				{
@@ -70,28 +78,33 @@
 		clearForm();
 	}
 
+	//Loads selected message back into the form for editing
 	function editMessage(item) {
 		name = item.name;
 		email = item.email;
 		message = item.message;
 		editingId = item.id;
 
+		//Auto scrolls user up to thhe form
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth'
 		});
 	}
 
+	//Deletes a message after confirmation
 	function deleteMessage(id) {
 		if (confirm('Delete this message?')) {
 			submittedMessages = submittedMessages.filter((item) => item.id !== id);
 
+			//If the deleted message was being edited, reset the form
 			if (editingId === id) {
 				clearForm();
 			}
 		}
 	}
 
+	//Cancels editing and returns the form to the normal submit mode
 	function cancelEdit() {
 		clearForm();
 	}
@@ -105,6 +118,7 @@
 	<h1>GET IN TOUCH</h1>
 	<p class="subtitle">We’d love to hear from you!</p>
 
+	<!-- Contact form uses preventDefault so Svelte handles submission without the page reloading-->
 	<form class="contact-form" on:submit|preventDefault={handleSubmit}>
 		<label for="name">Name</label>
 		<input id="name" type="text" bind:value={name} required />
@@ -122,8 +136,10 @@
 			placeholder="Write your message here..."
 		></textarea>
 
+		<!-- Live feedback on message length -->
 		<p class="char-count">{message.length}/{maxMessageLength} characters</p>
-
+		
+		<!-- Shows when the user is editing an exsisting saved message -->
 		{#if editingId !== null}
 			<p class="editing-message">Editing saved message</p>
 		{/if}
@@ -154,6 +170,7 @@
 		{#if submittedMessages.length === 0}
 			<p class="empty-message">No messages submitted yet.</p>
 		{:else}
+			<!-- Keyed each block to help Svelte track each message bu id -->
 			{#each submittedMessages as item (item.id)}
 				<div class="message-card">
 					<p><strong>Name:</strong> {item.name}</p>
