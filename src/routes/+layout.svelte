@@ -139,7 +139,7 @@
 		position: relative;
 		width: 100%;
 		max-width: 400px;
-		background-color: var(--color-surface);
+		background-color: var(--card-placeholder);
 		padding: var(--space-lg);
 		border-radius: var(--card-radius);
 		display: flex;

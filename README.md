@@ -73,3 +73,29 @@ Amanda Andrites (C00309361) Notes and Commitment to the project
     -designed and developed a static “About Us” page using a grid layout
     -integrated and managed custom fonts and began establishing a consistent colour system across the application
     -configured and fixed linking issues using variables.css to ensure consistent styling across all pages
+
+Isabel Gunnings (C00306887) Notes and Commitment to the project
+    -designed, developed and implemented the start page as an entry point of the website/application, providing users with options to log in/sign up, or continue as a guest
+    -Implemented navigation logic using SvelteKit routing to redirect users to the home page if already logged in or continuing as a guest 
+    -utilised localStorage to manage user session state (logged in vs guest users), for user flow and persistence across pages
+    -integrated a modal-based authentication system for login and sign-up, ensuring a smooth and accessible user expierence 
+    -ensured responsiveness of the start page across different screen sizes using flexible layout and spacing variables
+
+    -designed, developed and implemented the contact page as a fully dynamic Svelte page that supports CRUD functionality (Create, read, update and delete messages)
+    -Implemented state managment using Svelte reactivity to handle user input, editing states, and message updates
+    -added localStorage persistance to ensure that submitted messages are saved and retained after page refresh, improving the users expierence
+    -implemented form handeling with validation using required inputs and character limits to prevent invalid submissions 
+    -added user feedback through a success modal and confirmation prompts for delete, improving affordance and feedback
+    -developed edit functionality allowing users to update previously submitted messages with clear UI state changes
+    -implemented an empty state message when no data is present to improve clarity and usability
+    -ensured accessibility through use of semantic HTML, labels for all inputs, aria attributes for modals, and keyboard focus states
+    -contributed to the shared design system through reusable Button component and consistent use of CSS variables (spacing, colours, typography)
+    -applied responsive design principles to ensure that contact page works across mobile and desktop screen sizes
+    
+Testing and Evaluation (Isabel Gunnings)
+    -Tested CRUD functionality across multiple scenarios (add, edit, delete and empty states)
+    -Verified persistence using localStorage by refreshing and reloading pages
+    -Tested responsiveness on mobile and desktop screen sizes
+    -checked keyboard navigation and focus states for accessibility
+    -Reviewed design against usability heuristics including feedback, consistency, and clarity 
+

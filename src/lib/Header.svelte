@@ -73,6 +73,11 @@
 		align-items: center;
 	}
 
+	.icon-button img, 
+	.icon-link img {
+		filter: brightness(0) invert(1);
+	}
+
 	/* Navigation links */
 	nav {
 		display: flex; 

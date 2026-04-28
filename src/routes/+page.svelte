@@ -89,12 +89,12 @@
 	.welcome-box h1 {
 		margin: 0;
 		font-family: var(--font-heading);
-		color: var(--color-surface);
+		color: var(--color-white);
 	}
 
 	.welcome-box p {
 		margin-bottom: var(--space-lg);
-		color: var(--color-surface);
+		color: var(--color-white);
 	}
 
 	@media (max-width: 500px) {
